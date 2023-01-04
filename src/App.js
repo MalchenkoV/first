@@ -6,7 +6,7 @@ function App() {
       <header className="App-header">
         <h1>Info</h1>
         <nav className='menu'>
-          <ul>
+          <ul className='link'>
             <li><a href='#weather' className='link'>Weather</a></li>
             <li><a href='#holiday' className='link'>Holiday</a></li>
             <li><a href='#news' className='link'>News</a></li>
@@ -20,6 +20,7 @@ function App() {
         <section className='weather' id='weather'>
             <div className='data-box'>
               <h2 className='header'>Tbilisi</h2>
+              <h2 className='dayToday'></h2>
               <h2 className='time'></h2>
               <h2 className='temp'></h2>
               <h2 className='wind'></h2>              
@@ -28,13 +29,13 @@ function App() {
         <section className='holiday' id='holiday'>
           <div className='data-box'>
             <h2 className='header'>Today is</h2>
-            <h2 className='day-today'></h2>
+            <h2 className='today-is'></h2>
           </div>
         </section>
         <section className='news' id='news'>
           <div className='data-box'>
-            <h2 className='title'></h2>
-            <a href='' className='url' target="_blank" rel="noopener noreferrer">Show me articles</a>
+            <a href='' className='title' target="_blank" rel="noopener noreferrer"></a>
+            <ul id='articles'></ul>
           </div>
         </section>
       </main>

@@ -26,13 +26,12 @@
 }
 
 ul {
-  list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
 .link {
-  
+  list-style-type: none;
   font-size: 25px;
   text-decoration: none;
   color: white;
@@ -40,7 +39,6 @@ ul {
 
 .add-info {
   margin-top: 60px;
-  
 }
 
 .App-main {
@@ -61,16 +59,20 @@ ul {
   display: flex;
   flex-direction: column;
   text-align: right;
+  margin: auto;
+  top: 0;
+  bottom: 0;
   padding-right: 10px;
   margin-right: 20px;
   padding-left: 10px;
-  margin-top: 40px;
   padding-bottom: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   background-color: black;
   opacity: 0.7;
   height: fit-content;
+  width: fit-content;
+  max-width: 50%;
 }
 
 .header {
@@ -78,19 +80,9 @@ ul {
   
 }
 
-.temp {
+.temp .wind .time .dayToday {
   margin-top: 40px;
   font-size: 20px;  
-}
-
-.wind {
-  margin-top: 40px;
-  font-size: 20px;  
-}
-
-.time {
-  margin-top: 40px;
-  font-size: 20px;
 }
 
 .holiday {
@@ -101,8 +93,8 @@ ul {
   justify-content: flex-end;
 }
 
-.day-today {
-  margin-top: 40px;
+.today-is {
+  margin-top: 20px;
   font-size: 40px;
 }
 
@@ -116,11 +108,25 @@ ul {
 
 .title {
   font-size: 40px;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .url {
-  font-size: 30px;
+  font-size: 16px;
   font-weight: 600;
+  color: white;
+  margin-top: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-decoration: none;
+  text-align: left;
+  list-style-position: inside;
+}
+
+#articles {
   color: white;
 }
 
