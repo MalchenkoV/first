@@ -1,6 +1,9 @@
 import './App.css';
+import { Forecast } from "./components/Forecast";
+import { Holidays } from "./components/Holidays";
+import { News } from "./components/News";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -18,30 +21,16 @@ function App() {
       </header>
       <main className='App-main'>
         <section className='weather' id='weather'>
-            <div className='data-box'>
-              <h2 className='header'>Tbilisi</h2>
-              <h2 className='dayToday'></h2>
-              <h2 className='time'></h2>
-              <h2 className='temp'></h2>
-              <h2 className='wind'></h2>              
-            </div>
+          <Forecast />
         </section>
         <section className='holiday' id='holiday'>
-          <div className='data-box'>
-            <h2 className='header'>Today is</h2>
-            <h2 className='today-is'></h2>
-          </div>
+          <Holidays />
         </section>
         <section className='news' id='news'>
-          <div className='data-box'>
-            <a href='' className='title' target="_blank" rel="noopener noreferrer"></a>
-            <ul id='articles'></ul>
-          </div>
+          <News />
         </section>
       </main>
       <footer className='App-footer'>@Created by MalchenkoV</footer>
     </div>
   );
 }
-
-export default App;
