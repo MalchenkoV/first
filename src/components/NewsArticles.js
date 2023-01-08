@@ -1,43 +1,43 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { getNews } from "../api";
+import React, { useEffect, useState } from 'react'
 
-export function NewsArticles() {
-    const [  newsParam, setNewsParam] = useState({});
+import { getNews } from '../api'
 
-    useEffect(() => {
-        async function fetchNews() {
-            const { data } = await getNews();
-            const articles = document.getElementById('articles');
+export function NewsArticles () {
+  const [newsParam, setNewsParam] = useState({})
 
-            setNewsParam({
-                title: data.response.edition.webTitle,
-                titleUrl: data.response.edition.webUrl
-            });
+  useEffect(() => {
+    async function fetchNews () {
+      const { data } = await getNews()
+      const articles = document.getElementById('articles')
 
-            for (const key in data.response.results) {
-                newsParam.articleTitle = data.response.results[key].webTitle
-                newsParam.articleUrl = data.response.results[key].webUrl
-                const li = document.createElement('li');
-                const article = document.createElement('a');
-                li.className = 'url';
-                article.className = 'url';
-                article.target = '_blank';
+      setNewsParam({
+        title: data.response.edition.webTitle,
+        titleUrl: data.response.edition.webUrl,
+      })
 
-                article.textContent = newsParam.articleTitle;
-                article.href = newsParam.articleUrl;
-                li.appendChild(article);
-                articles.appendChild(li);
-            };
-        };
+      for (const key in data.response.results) {
+        newsParam.articleTitle = data.response.results[key].webTitle
+        newsParam.articleUrl = data.response.results[key].webUrl
+        const li = document.createElement('li')
+        const article = document.createElement('a')
+        li.className = 'url'
+        article.className = 'url'
+        article.target = '_blank'
 
-        fetchNews();
-    }, [])
+        article.textContent = newsParam.articleTitle
+        article.href = newsParam.articleUrl
+        li.appendChild(article)
+        articles.appendChild(li)
+      }
+    }
 
-    return (
-        <div className='data-box'>
-            <a href={newsParam.titleUrl} className='title' target="_blank" rel="noopener noreferrer">{newsParam.title}: Last 10 articles</a>
-            <ul id='articles'></ul>
-        </div>
-    )
+    fetchNews()
+  }, [])
+
+  return (
+    <div className='data-box'>
+      <a href={newsParam.titleUrl} className='title' target="_blank" rel="noopener noreferrer">{newsParam.title}: Last 10 articles</a>
+      <ul id='articles'></ul>
+    </div>
+  )
 }
