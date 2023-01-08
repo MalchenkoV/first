@@ -49,7 +49,7 @@ ul {
 
 .weather {
   height: 100vh;
-  background-image: url("./zvezdnoe_nebo_oblaka_zakat_120716_1920x1080.jpg");
+  background-image: url("./images/zvezdnoe_nebo_oblaka_zakat_120716_1920x1080.jpg");
   background-size: cover;
   display: flex;
   justify-content: flex-end;
@@ -86,7 +86,7 @@ ul {
 }
 
 .holiday {
-  background-image: url("./zheleznaia_doroga_poezd_stantsiia_134586_1920x1080.jpg");
+  background-image: url("./images/zheleznaia_doroga_poezd_stantsiia_134586_1920x1080.jpg");
   height: 100vh;
   background-size: cover;
   display: flex;
@@ -99,7 +99,7 @@ ul {
 }
 
 .news {
-  background-image: url("./origami_samolet_art_128345_1920x1080.jpg");
+  background-image: url("./images/origami_samolet_art_128345_1920x1080.jpg");
   height: 100vh;
   background-size: cover;
   display: flex;
