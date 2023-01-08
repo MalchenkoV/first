@@ -5,13 +5,15 @@
 }
 
 .App-header {
-  margin: 0;
+  margin: 0px;
+  padding: 0px;
   width: 30%;
   height: 100vh;
   position: fixed;
   background-color: black;
   opacity: 0.7;
-  padding: 0 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   text-align: left;
 }
 
@@ -47,7 +49,7 @@ ul {
 
 .weather {
   height: 100vh;
-  background-image: url("images/zvezdnoe_nebo_oblaka_zakat_120716_1920x1080.jpg");
+  background-image: url("./images/zvezdnoe_nebo_oblaka_zakat_120716_1920x1080.jpg");
   background-size: cover;
   display: flex;
   justify-content: flex-end;
@@ -57,14 +59,13 @@ ul {
   display: flex;
   flex-direction: column;
   text-align: right;
+  margin: auto;
   top: 0;
   bottom: 0;
-  padding-right: 10px;
-  margin: auto 20px auto auto;
-  padding-left: 10px;
-  padding-bottom: 20px;
+  margin-right: 20px;
+  padding: 0 10px 20px 10px;
   border-radius: 10px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   background-color: black;
   opacity: 0.7;
   height: fit-content;
@@ -74,16 +75,16 @@ ul {
 
 .header {
   font-size: 40px;
-
+  
 }
 
 .temp .wind .time .dayToday {
   margin-top: 40px;
-  font-size: 20px;
+  font-size: 20px;  
 }
 
 .holiday {
-  background-image: url("images/zheleznaia_doroga_poezd_stantsiia_134586_1920x1080.jpg");
+  background-image: url("./images/zheleznaia_doroga_poezd_stantsiia_134586_1920x1080.jpg");
   height: 100vh;
   background-size: cover;
   display: flex;
@@ -96,7 +97,7 @@ ul {
 }
 
 .news {
-  background-image: url("images/origami_samolet_art_128345_1920x1080.jpg");
+  background-image: url("./images/origami_samolet_art_128345_1920x1080.jpg");
   height: 100vh;
   background-size: cover;
   display: flex;

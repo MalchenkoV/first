@@ -1,7 +1,8 @@
+import React from 'react';
 import './App.css';
-import { Forecast } from "./components/Forecast";
-import { Holidays } from "./components/Holidays";
-import { News } from "./components/News";
+import { Forecast } from './components/Forecast';
+import { Holidays } from './components/Holidays';
+import { NewsArticles } from './components/NewsArticles';
 
 export default function App() {
   return (
@@ -27,10 +28,11 @@ export default function App() {
           <Holidays />
         </section>
         <section className='news' id='news'>
-          <News />
+          <NewsArticles />
         </section>
       </main>
       <footer className='App-footer'>@Created by MalchenkoV</footer>
     </div>
   );
 }
+
