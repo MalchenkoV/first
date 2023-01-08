@@ -1,10 +1,11 @@
-import React from 'react';
-import './App.css';
-import { Forecast } from './components/Forecast';
-import { Holidays } from './components/Holidays';
-import { NewsArticles } from './components/NewsArticles';
+import React from 'react'
 
-export default function App() {
+import './App.css'
+import { Forecast } from './components/Forecast'
+import { Holidays } from './components/Holidays'
+import { NewsArticles } from './components/NewsArticles'
+
+export default function App () {
   return (
     <div className="App">
       <header className="App-header">
@@ -33,6 +34,6 @@ export default function App() {
       </main>
       <footer className='App-footer'>@Created by MalchenkoV</footer>
     </div>
-  );
+  )
 }
 

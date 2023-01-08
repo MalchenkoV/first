@@ -1,22 +1,11 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-  },
+  root: true,
   extends: [
-    'plugin:react/recommended',
-    'react-app',
-    'react-app/jest'
-  ],
-  overrides: [
-  ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
-  plugins: [
-    'react',
+    '@coxy/eslint-config/react',
   ],
   rules: {
+    'react-hooks/exhaustive-deps': [0],
+    'comma-dangle': ['error', 'always-multiline'],
+    'filename-rules/match': [0],
   },
-};
+}
