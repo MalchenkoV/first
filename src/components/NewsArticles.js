@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { getNews } from "../api";
 
 export function NewsArticles() {
-    const [newsParam, setNewsParam] = useState({});
+    const [  newsParam, setNewsParam] = useState({});
 
     useEffect(() => {
         async function fetchNews() {
             const { data } = await getNews();
             console.log(data);
             const articles = document.getElementById('articles');
-            
+
             setNewsParam({
                 title: data.response.edition.webTitle,
                 titleUrl: data.response.edition.webUrl
@@ -24,7 +24,7 @@ export function NewsArticles() {
                 li.className = 'url';
                 article.className = 'url';
                 article.target = '_blank';
-                
+
                 article.textContent = newsParam.articleTitle;
                 article.href = newsParam.articleUrl;
                 li.appendChild(article);
