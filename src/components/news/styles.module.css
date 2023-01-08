@@ -1,0 +1,20 @@
+.url {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin-top: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-decoration: none;
+  text-align: left;
+  list-style-position: inside;
+}
+
+
+.title {
+  font-size: 40px;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+}

@@ -7,5 +7,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': [0],
     'comma-dangle': ['error', 'always-multiline'],
     'filename-rules/match': [0],
+    'no-console': [0],
   },
 }

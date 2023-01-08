@@ -1,9 +1,9 @@
 import React from 'react'
 
 import './App.css'
-import { Forecast } from './components/Forecast'
+import { Forecast } from './components/forecast/Forecast'
 import { Holidays } from './components/Holidays'
-import { NewsArticles } from './components/NewsArticles'
+import { NewsArticles } from './components/news/NewsArticles'
 
 export default function App () {
   return (
