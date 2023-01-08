@@ -8,7 +8,6 @@ export function NewsArticles() {
     useEffect(() => {
         async function fetchNews() {
             const { data } = await getNews();
-            console.log(data);
             const articles = document.getElementById('articles');
 
             setNewsParam({
