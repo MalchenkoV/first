@@ -31,7 +31,7 @@ export function NewsArticles () {
   }, [])
 
   return (
-    <div className='data-box'>
+    <div className={styles.data-box}>
       <a href={newsParam.url} className={styles.title} target="_blank" rel="noopener noreferrer">{newsParam.title}: Last 5 articles</a>
       <ul>
         {news.map((item) => (

@@ -38,14 +38,15 @@ export function Forecast () {
   }, [])
 
   return (
-    <div className='data-box'>
+    <div className={styles.data-box}>
       <h2 className={styles.title}>Tbilisi</h2>
-      <h2 className='dayToday'>{timeParams.day}</h2>
-      <h2 className='time'>{timeParams.time}</h2>
-      <h2 className='temp'>Temperature is {dayParams.temperature} °C</h2>
-      <h2 className='wind'>Wind speed is {dayParams.windSpeed} km/h</h2>
+      <h2 className={styles.dayToday}>{timeParams.day}</h2>
+      <h2 className={styles.time}>{timeParams.time}</h2>
+      <h2 className={styles.temp}>Temperature is {dayParams.temperature} °C</h2>
+      <h2 className={styles.wind}>Wind speed is {dayParams.windSpeed} km/h</h2>
 
-      <button>Обновить</button>
+      <button onClick={fetchForecast}>Обновить</button>
     </div>
   )
 }
+

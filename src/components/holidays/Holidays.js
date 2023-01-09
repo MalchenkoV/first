@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import { getHolidays } from '../api'
-import { pad } from '../utils'
+import { getHolidays } from '../../api'
+import { pad } from '../../utils'
+
+import styles from './styles.module.css'
 
 export function Holidays () {
   const [dayToday, setDayToday] = useState('')
@@ -19,9 +21,9 @@ export function Holidays () {
   }, [])
 
   return (
-    <div className='data-box'>
-      <h2 className='header'>Today is</h2>
-      <h2 className='today-is'>{dayToday}</h2>
+    <div className={styles.data-box}>
+      <h2 className={styles.title}>Today is</h2>
+      <h2 className={styles.today-is}>{dayToday}</h2>
     </div>
   )
 }
