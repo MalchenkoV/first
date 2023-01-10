@@ -37,15 +37,23 @@ export function Forecast () {
     return () => clearInterval(timer)
   }, [])
 
+  async function onClick () {
+    const { data } = await getForecast()
+    setDayParams({
+      temperature: data.current_weather.temperature,
+      windSpeed: data.current_weather.windspeed,
+    })
+  }
+
   return (
-    <div className={styles.data-box}>
+    <div className={styles.databox}>
       <h2 className={styles.title}>Tbilisi</h2>
       <h2 className={styles.dayToday}>{timeParams.day}</h2>
       <h2 className={styles.time}>{timeParams.time}</h2>
       <h2 className={styles.temp}>Temperature is {dayParams.temperature} °C</h2>
       <h2 className={styles.wind}>Wind speed is {dayParams.windSpeed} km/h</h2>
 
-      <button onClick={fetchForecast}>Обновить</button>
+      <button onClick={onClick}>Обновить</button>
     </div>
   )
 }

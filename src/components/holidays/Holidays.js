@@ -21,9 +21,9 @@ export function Holidays () {
   }, [])
 
   return (
-    <div className={styles.data-box}>
+    <div className={styles.databox}>
       <h2 className={styles.title}>Today is</h2>
-      <h2 className={styles.today-is}>{dayToday}</h2>
+      <h2 className={styles.todayIs}>{dayToday}</h2>
     </div>
   )
 }

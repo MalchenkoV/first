@@ -2,7 +2,7 @@ import React from 'react'
 
 import './App.css'
 import { Forecast } from './components/forecast/Forecast'
-import { Holidays } from './components/Holidays'
+import { Holidays } from './components/holidays/Holidays'
 import { NewsArticles } from './components/news/NewsArticles'
 
 export default function App () {

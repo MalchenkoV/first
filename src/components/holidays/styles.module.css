@@ -1,4 +1,4 @@
-.data-box {
+.databox {
     display: flex;
     flex-direction: column;
     text-align: right;
@@ -15,7 +15,7 @@
     max-width: 50%;
 }
 
-.today-is {
+.todayIs {
     margin-top: 20px;
     font-size: 40px;
 }
