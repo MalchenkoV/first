@@ -1,0 +1,92 @@
+.App {
+  position: relative;
+  font-family: "Courier New", Courier, monospace;
+  color: white;
+}
+
+.App_header {
+  position: fixed;
+
+  width: 30%;
+  height: 100vh;
+  margin: 0;
+  padding: 0 20px;
+
+  text-align: left;
+
+  opacity: 0.7;
+  background-color: black;
+}
+
+.menu {
+  margin-top: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  border-top: 1px solid snow;
+  border-bottom: 1px solid snow;
+}
+
+.linkUl {
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  font-size: 25px;
+  color: white;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.add_info {
+  margin-top: 60px;
+}
+
+.App_main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.weather {
+  display: flex;
+  justify-content: flex-end;
+
+  height: 100vh;
+
+  background-image: url("../../images/zvezdnoe_nebo_oblaka_zakat_120716_1920x1080.jpg");
+  background-size: cover;
+}
+
+.holiday {
+  display: flex;
+  justify-content: flex-end;
+
+  height: 100vh;
+
+  background-image: url("../../images/zheleznaia_doroga_poezd_stantsiia_134586_1920x1080.jpg");
+  background-size: cover;
+}
+
+.news {
+  display: flex;
+  justify-content: flex-end;
+
+  height: 100vh;
+
+  background-image: url("../../images/origami_samolet_art_128345_1920x1080.jpg");
+  background-size: cover;
+}
+
+.App_footer {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+  left: 0;
+
+  margin: auto;
+
+  font-size: 12px;
+  text-align: center;
+}

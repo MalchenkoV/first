@@ -1,37 +1,42 @@
 .url {
+  overflow: hidden;
+
+  margin-top: 15px;
+
   font-size: 16px;
   font-weight: 600;
   color: white;
-  margin-top: 15px;
+  text-align: left;
+  text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
-  text-decoration: none;
-  text-align: left;
   list-style-position: inside;
 }
 
 .title {
   font-size: 40px;
+  font-weight: 700;
   color: white;
   text-decoration: none;
-  font-weight: 700;
 }
 
 .databox {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
   top: 0;
   bottom: 0;
-  margin: auto 20px auto auto;
-  padding: 0 10px 20px 10px;
-  border-radius: 10px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-  background-color: black;
-  opacity: 0.7;
-  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+
   width: fit-content;
   max-width: 50%;
-}
+  height: fit-content;
+  margin: auto 20px auto auto;
+  padding: 0 10px 20px;
 
+  text-align: right;
+
+  opacity: 0.7;
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgb(0 0 0 / 15%);
+}

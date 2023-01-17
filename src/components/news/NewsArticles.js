@@ -1,16 +1,19 @@
-import { async } from 'q'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { getNews } from '../../api'
+import { addNewsFunc } from '../../store/toolkit'
 
 import styles from './styles.module.css'
 
 export function NewsArticles () {
-  const savedNews = localStorage.getItem('result')
-  const newsValue = JSON.parse(savedNews)
-
   const [newsParam, setNewsParam] = useState({})
-  const [news, setNews] = useState(newsValue.slice(0, 5))
+  const [news, setNews] = useState([])
+  const dispatch = useDispatch()
+
+  useLayoutEffect(() => {
+    setNews(JSON.parse(window.localStorage.getItem('result')).slice(0, 5) || [])
+  }, [])
 
   useEffect(() => {
     async function fetchTitle () {
@@ -37,11 +40,18 @@ export function NewsArticles () {
         })
       }
       setNews(result.slice(0, 5))
-      localStorage.setItem('result', JSON.stringify(result))
+      dispatch(addNewsFunc(result))
+      // window.localStorage.setItem('result', JSON.stringify(result))
     }
 
     fetchNews()
   }, [])
+
+  const newsButton = useCallback(
+    () => {
+      setNews(JSON.parse(window.localStorage.getItem('result')))
+    }, [],
+  )
 
   return (
     <div className={styles.databox}>
@@ -53,7 +63,7 @@ export function NewsArticles () {
           </li>
         ))}
       </ul>
-      <button onClick={() => setNews(newsValue)}>load more</button>
+      <button onClick={newsButton}>load more</button>
     </div>
   )
 }
