@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { getNews } from '../../api'
 import { addNewsFunc } from '../../store/toolkit'
@@ -10,9 +10,10 @@ export function NewsArticles () {
   const [newsParam, setNewsParam] = useState({})
   const [news, setNews] = useState([])
   const dispatch = useDispatch()
+  const articles = useSelector((state) => state.articles.articles[0])
 
   useLayoutEffect(() => {
-    setNews(JSON.parse(window.localStorage.getItem('result')).slice(0, 5) || [])
+    setNews(articles.slice(0, 5) || [])
   }, [])
 
   useEffect(() => {
@@ -41,7 +42,6 @@ export function NewsArticles () {
       }
       setNews(result.slice(0, 5))
       dispatch(addNewsFunc(result))
-      // window.localStorage.setItem('result', JSON.stringify(result))
     }
 
     fetchNews()
@@ -49,7 +49,7 @@ export function NewsArticles () {
 
   const newsButton = useCallback(
     () => {
-      setNews(JSON.parse(window.localStorage.getItem('result')))
+      setNews(articles)
     }, [],
   )
 

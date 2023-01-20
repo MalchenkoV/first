@@ -14,7 +14,7 @@ import storage from 'redux-persist/lib/storage'
 import newsReducer from './toolkit'
 
 const rootReducer = combineReducers({
-  news: newsReducer,
+  articles: newsReducer,
 })
 
 const persistConfig = {

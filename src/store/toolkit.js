@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const newsSlice = createSlice({
-  name: 'news',
+  name: 'articles',
   initialState: {
-    news: [],
+    articles: [],
   },
   reducers: {
     addNewsFunc (state, action) {
       return {
-        news: [action.payload],
+        articles: [action.payload],
       }
     },
   },
