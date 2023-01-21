@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getNews } from '../../api'
-import { addNewsFunc } from '../../store/toolkit'
+import { addNewsFunc, clearState, filterArticles } from '../../store/toolkit'
 
 import styles from './styles.module.css'
 
@@ -10,7 +10,7 @@ export function NewsArticles () {
   const [newsParam, setNewsParam] = useState({})
   const [news, setNews] = useState([])
   const dispatch = useDispatch()
-  const articles = useSelector((state) => state.articles.articles[0])
+  const articles = useSelector((state) => state.articles.articles)
 
   useLayoutEffect(() => {
     setNews(articles.slice(0, 5) || [])
@@ -41,7 +41,8 @@ export function NewsArticles () {
         })
       }
       setNews(result.slice(0, 5))
-      dispatch(addNewsFunc(result))
+      // dispatch(addNewsFunc(result))
+      // dispatch(clearState())
     }
 
     fetchNews()

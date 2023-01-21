@@ -7,13 +7,14 @@ const newsSlice = createSlice({
   },
   reducers: {
     addNewsFunc (state, action) {
-      return {
-        articles: [action.payload],
-      }
+      state.articles = [...state.articles, ...action.payload]
+    },
+    clearState (state, action) {
+      state.articles = []
     },
   },
 })
 
-export const { addNewsFunc } = newsSlice.actions
+export const { addNewsFunc, clearState, filterArticles } = newsSlice.actions
 
 export default newsSlice.reducer
