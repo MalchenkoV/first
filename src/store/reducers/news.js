@@ -8,7 +8,7 @@ export const newsSlice = createSlice({
     title: '',
     url: '',
     articles: [],
-    // todo - lastFetchAt
+    lastFetchAt: '',
   },
   reducers: {
     setNewsTitle (state, action) {
@@ -26,7 +26,7 @@ export const newsSlice = createSlice({
       })
 
       state.articles = [...state.articles, ...newsForAdd]
-      // todo - lastFetchAt = new Date()
+      state.lastFetchAt = Date.now()
     },
     clearState (state) {
       state.articles = []
@@ -34,8 +34,6 @@ export const newsSlice = createSlice({
   },
 })
 
-// todo почитать про createAsyncThunk
-// todo почитать про try catch
 export const fetchNews = createAsyncThunk('fetch/news', async (_, thunkAPI) => {
   try {
     const { data } = await getNews()

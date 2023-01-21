@@ -11,16 +11,11 @@ export function NewsArticles () {
   const news = useSelector((state) => state.articles.articles)
   const title = useSelector((state) => state.articles.title)
   const url = useSelector((state) => state.articles.url)
-  // todo const lastFetchAt = useSelector...
+  const lastFetchAt = useSelector((state) => state.articles.lastFetchAt)
   const currentDate = Date.now()
 
-  // (currentDate - Date.now()) / 1000
-
-  const isNeedFetch = true // todo
-
-  // useLayoutEffect(() => {
-  //   setNews(articles.slice(0, 5) || [])
-  // }, [])
+  const timeDif = ((currentDate - lastFetchAt) / 1000) / 60
+  const isNeedFetch = timeDif >= 5
 
   useEffect(() => {
     if (isNeedFetch) {
