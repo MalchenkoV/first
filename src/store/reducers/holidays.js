@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
-import { getHolidays } from '../../api'
 import { pad } from '../../utils'
 
 export const holidaysSlice = createSlice({
@@ -19,11 +19,9 @@ export const holidaysSlice = createSlice({
   },
 })
 
-// todo почитать про createAsyncThunk
-// todo почитать про try catch
 export const fetchHolidays = createAsyncThunk('fetch/holidays', async (_, thunkAPI) => {
   try {
-    const { data } = await getHolidays()
+    const { data } = await axios.get('https://date.nager.at/api/v3/publicholidays/2023/RU')
 
     thunkAPI.dispatch(holidaysSlice.actions.setHolidays(data))
   } catch (ignore) {

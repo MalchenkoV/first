@@ -10,13 +10,16 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import logger from 'redux-logger'
 
 import newsReducer from './reducers/news'
 import holidaysReducer from './reducers/holidays'
+import forecastReducer from './reducers/forecasts'
 
 const rootReducer = combineReducers({
   articles: newsReducer,
   holidays: holidaysReducer,
+  forecast: forecastReducer,
 })
 
 const persistConfig = {
@@ -33,7 +36,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(logger),
   devTools: process.env.NODE_ENV !== 'production',
 })
 

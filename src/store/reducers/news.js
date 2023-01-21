@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
-import { getNews } from '../../api'
+import axios from 'axios'
 
 export const newsSlice = createSlice({
   name: 'news',
@@ -36,7 +35,7 @@ export const newsSlice = createSlice({
 
 export const fetchNews = createAsyncThunk('fetch/news', async (_, thunkAPI) => {
   try {
-    const { data } = await getNews()
+    const { data } = await axios.get('https://content.guardianapis.com/uk-news?api-key=a04d1215-c861-4577-bb98-eacebf2194f9&show-blocks=body:latest:5')
 
     const news = []
     for (const key in data.response.results) {
