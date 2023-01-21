@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// todo возможно они тут не нужны, их надо куда то перенести?
 export async function getForecast () {
   return axios.get('https://api.open-meteo.com/v1/forecast?latitude=41.79&longitude=44.74&current_weather=true&timezone=auto')
 }

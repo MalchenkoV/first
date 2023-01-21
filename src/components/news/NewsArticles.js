@@ -1,62 +1,41 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getNews } from '../../api'
-import { addNewsFunc, clearState, filterArticles } from '../../store/toolkit'
+import { fetchNews, newsSlice } from '../../store/reducers/news'
 
 import styles from './styles.module.css'
 
 export function NewsArticles () {
-  const [newsParam, setNewsParam] = useState({})
-  const [news, setNews] = useState([])
   const dispatch = useDispatch()
-  const articles = useSelector((state) => state.articles.articles)
 
-  useLayoutEffect(() => {
-    setNews(articles.slice(0, 5) || [])
-  }, [])
+  const news = useSelector((state) => state.articles.articles)
+  const title = useSelector((state) => state.articles.title)
+  const url = useSelector((state) => state.articles.url)
+  // todo const lastFetchAt = useSelector...
+  const currentDate = Date.now()
 
-  useEffect(() => {
-    async function fetchTitle () {
-      const { data } = await getNews()
+  // (currentDate - Date.now()) / 1000
 
-      const title = data.response.edition
-      setNewsParam({
-        title: title.webTitle,
-        url: title.webUrl,
-      })
-    }
-    fetchTitle()
-  }, [])
+  const isNeedFetch = true // todo
+
+  // useLayoutEffect(() => {
+  //   setNews(articles.slice(0, 5) || [])
+  // }, [])
 
   useEffect(() => {
-    async function fetchNews () {
-      const { data } = await getNews()
-
-      const result = []
-      for (const key in data.response.results) {
-        result.push({
-          title: data.response.results[key].webTitle,
-          url: data.response.results[key].webUrl,
-        })
-      }
-      setNews(result.slice(0, 5))
-      // dispatch(addNewsFunc(result))
-      // dispatch(clearState())
+    if (isNeedFetch) {
+      dispatch(fetchNews())
     }
-
-    fetchNews()
   }, [])
 
-  const newsButton = useCallback(
-    () => {
-      setNews(articles)
-    }, [],
-  )
+  const handleClearAndReFetch = useCallback(() => {
+    dispatch(newsSlice.actions.clearState())
+    dispatch(fetchNews())
+  }, [])
 
   return (
     <div className={styles.databox}>
-      <a href={newsParam.url} className={styles.title} target="_blank" rel="noopener noreferrer">{newsParam.title}: Last 5 articles</a>
+      <a href={url} className={styles.title} target="_blank" rel="noopener noreferrer">{title}: Last 5 articles</a>
       <ul>
         {news.map((item) => (
           <li className={styles.url} key={item.url}>
@@ -64,7 +43,7 @@ export function NewsArticles () {
           </li>
         ))}
       </ul>
-      <button onClick={newsButton}>load more</button>
+      <button onClick={handleClearAndReFetch}>Clear & reFetch</button>
     </div>
   )
 }

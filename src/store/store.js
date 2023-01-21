@@ -11,10 +11,12 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import newsReducer from './toolkit'
+import newsReducer from './reducers/news'
+import holidaysReducer from './reducers/holidays'
 
 const rootReducer = combineReducers({
   articles: newsReducer,
+  holidays: holidaysReducer,
 })
 
 const persistConfig = {
@@ -23,6 +25,8 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+// todo - * add logger middleware redux
 
 const store = configureStore({
   reducer: persistedReducer,
