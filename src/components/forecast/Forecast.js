@@ -12,26 +12,6 @@ export function Forecast () {
   const time = useSelector((state) => state.forecast.time)
   const day = useSelector((state) => state.forecast.day)
 
-  // const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  // const [timeParams, setTimeParams] = useState({})
-
-  // useEffect(() => {
-  //   function timeUpdate () {
-  //     const date = new Date()
-  //     const currentTime = `${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`
-  //     const currentDay = `${pad(date.getDate(), 2)} ${months[date.getMonth()]} ${date.getFullYear()}`
-  //     setTimeParams({
-  //       time: currentTime,
-  //       day: currentDay,
-  //     })
-  //   }
-
-  //   const timer = setInterval(timeUpdate, 1000)
-  //   timeUpdate()
-
-  //   return () => clearInterval(timer)
-  // }, [])
-
   useEffect(() => {
     const timeUpdt = () => {
       dispatch(fetchDate())
