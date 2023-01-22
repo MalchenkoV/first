@@ -25,6 +25,14 @@ export const forecastSlice = createSlice({
       state.day = currentDay
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchForecast.pending, (state) => {
+      state.temperature = 'loading...'
+      state.windspeed = 'loading...'
+      state.time = 'loading...'
+      state.day = 'loading...'
+    })
+  },
 })
 
 export const fetchForecast = createAsyncThunk('fetch/forecast', async (_, thunkAPI) => {

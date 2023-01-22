@@ -31,6 +31,12 @@ export const newsSlice = createSlice({
       state.articles = []
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchNews.pending, (state) => {
+      state.title = 'loading...'
+      state.url = 'loading...'
+    })
+  },
 })
 
 export const fetchNews = createAsyncThunk('fetch/news', async (_, thunkAPI) => {

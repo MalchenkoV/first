@@ -17,6 +17,11 @@ export const holidaysSlice = createSlice({
       state.holidays = holidayItem ? holidayItem.name : 'Just ordinary day:('
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchHolidays.pending, (state) => {
+      state.holidays = 'loading...'
+    })
+  },
 })
 
 export const fetchHolidays = createAsyncThunk('fetch/holidays', async (_, thunkAPI) => {
