@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchDate, fetchForecast, forecastSlice } from '../../store/reducers/forecasts'
-import { pad } from '../../utils'
+import { fetchDate, fetchForecast } from '../../store/reducers/forecasts'
 
 import styles from './styles.module.css'
 
@@ -34,15 +33,13 @@ export function Forecast () {
   // }, [])
 
   useEffect(() => {
-    dispatch(fetchForecast())
-  })
+    const timeUpdt = () => {
+      dispatch(fetchDate())
+    }
+    const timer = setInterval(timeUpdt, 1000)
 
-  // useEffect(() => {
-  //   const timer = setInterval(dispatch(fetchDate()), 1000)
-  //   dispatch(fetchDate())
-
-  //   return () => clearInterval(timer)
-  // }, [])
+    return () => clearInterval(timer)
+  }, [])
 
   async function onClick () {
     dispatch(fetchForecast())
