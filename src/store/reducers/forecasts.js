@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 import { pad } from '../../utils'
 
@@ -10,6 +11,9 @@ export const forecastSlice = createSlice({
     windspeed: '',
     time: '',
     day: '',
+    city: '',
+    latitude: '',
+    longitude: '',
   },
   reducers: {
     setForecast (state, action) {
@@ -24,6 +28,11 @@ export const forecastSlice = createSlice({
       state.time = currentTime
       state.day = currentDay
     },
+    setLocation (state, action) {
+      state.city = action.payload.city
+      state.latitude = action.payload.latitude
+      state.longitude = action.payload.longitude
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchForecast.pending, (state) => {
@@ -35,9 +44,24 @@ export const forecastSlice = createSlice({
   },
 })
 
-export const fetchForecast = createAsyncThunk('fetch/forecast', async (_, thunkAPI) => {
+export const fetchLocation = createAsyncThunk('fetch/location', async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get('https://api.open-meteo.com/v1/forecast?latitude=41.79&longitude=44.74&current_weather=true&timezone=auto')
+    const { data } = await axios.get('http://api.ipstack.com/check?access_key=2fdefcdc88f3daf2e684771201b7e261')
+    console.log(data)
+    thunkAPI.dispatch(forecastSlice.actions.setLocation({
+      city: data.city,
+      latitude: data.latitude,
+      longitude: data.longitude,
+    }))
+  } catch (ignore) {
+    console.log(ignore)
+    return null
+  }
+})
+
+export const fetchForecast = createAsyncThunk('fetch/forecast', async (userLocation, thunkAPI) => {
+  try {
+    const { data } = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&current_weather=true&timezone=auto`)
     const weather = data.current_weather
     thunkAPI.dispatch(forecastSlice.actions.setForecast({
       temperature: weather.temperature,
