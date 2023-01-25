@@ -15,21 +15,24 @@ export function Library () {
     dispatch(fetchPopularBooks(pageNumber))
   }, [])
 
+  function getValue () {
+    return document.getElementById('searchLine').value
+  }
+
   const handleSearchBooks = useCallback(() => {
-    const searchLineValue = document.getElementById('searchLine').value
     dispatch(librarySlice.actions.clearState())
-    dispatch(fetchSearchResults(searchLineValue))
+    dispatch(fetchSearchResults(getValue()))
   }, [])
 
   const handleNextPage = useCallback(() => {
     setPageNumber(pageNumber + 1)
-    console.log(pageNumber)
-    // dispatch(fetchPopularBooks(pageNumber))
-  }, [])
+    dispatch(fetchPopularBooks(pageNumber + 1))
+  }, [pageNumber])
 
-  // const handlePrevPage = useCallback(() => {
-
-  // }, [])
+  const handlePrevPage = useCallback(() => {
+    setPageNumber(pageNumber - 1)
+    dispatch(fetchPopularBooks(pageNumber - 1))
+  }, [pageNumber])
 
   return (
     <div className={styles.databox}>
@@ -38,7 +41,7 @@ export function Library () {
         <input type='submit' value='Search' className={styles.search_button} onClick={handleSearchBooks}></input>
       </form>
       <div className={styles.buttons}>
-        <button className={styles.page_button} value='Previous'>Previous</button>
+        <button className={styles.page_button} value='Previous' onClick={handlePrevPage}>Previous</button>
         <button className={styles.page_button} value='Next' onClick={handleNextPage}>Next</button>
       </div>
       <div className={styles.booksgrid}>
