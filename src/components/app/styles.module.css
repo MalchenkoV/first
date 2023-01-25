@@ -1,5 +1,10 @@
 .App {
   position: relative;
+
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
   font-family: "Courier New", Courier, monospace;
   color: white;
 }
@@ -30,13 +35,13 @@
 .linkUl {
   margin: 0;
   padding: 0;
+  list-style-type: none;
 }
 
 .link {
   font-size: 25px;
   color: white;
   text-decoration: none;
-  list-style-type: none;
 }
 
 .add_info {
@@ -79,6 +84,13 @@
   background-size: cover;
 }
 
+.library {
+  display: flex;
+  justify-content: flex-end;
+  height: 100vh;
+  background-color: gainsboro;
+}
+
 .App_footer {
   position: absolute;
   right: 0;
@@ -89,4 +101,32 @@
 
   font-size: 12px;
   text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .App_header {
+    width: 25%;
+  }
+
+  .link {
+    font-size: 15px;
+  }
+
+  .add_info {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .App_header {
+    width: 20%;
+  }
+
+  .link {
+    font-size: 14px;
+  }
+
+  .add_info {
+    font-size: 12px;
+  }
 }

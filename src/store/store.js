@@ -15,11 +15,13 @@ import logger from 'redux-logger'
 import newsReducer from './reducers/news'
 import holidaysReducer from './reducers/holidays'
 import forecastReducer from './reducers/forecasts'
+import libraryReducer from './reducers/library'
 
 const rootReducer = combineReducers({
   articles: newsReducer,
   holidays: holidaysReducer,
   forecast: forecastReducer,
+  library: libraryReducer,
 })
 
 const persistConfig = {

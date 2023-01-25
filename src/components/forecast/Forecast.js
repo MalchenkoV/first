@@ -21,9 +21,9 @@ export function Forecast () {
     }
     dispatch(fetchLocation())
     dispatch(fetchForecast({ latitude, longitude }))
-    const timer = setInterval(timeUpdt, 1000)
+    // const timer = setInterval(timeUpdt, 1000)
 
-    return () => clearInterval(timer)
+    // return () => clearInterval(timer)
   }, [latitude, longitude])
 
   async function onClick () {

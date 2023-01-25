@@ -1,13 +1,3 @@
-/* @keyframes spinner {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-} */
-
 .url {
   overflow: hidden;
 
@@ -51,9 +41,60 @@
   box-shadow: 0 0 25px rgb(0 0 0 / 15%);
 }
 
-/* .spinner {
-  width: 40px;
-  height: 40px;
-  border: 5px solid #eee;
-  border-bottom-color: #0097a7;
-} */
+@media screen and (max-height: 600px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .url {
+    font-size: 12px;
+  }
+
+  .databox {
+    margin: auto 15px auto auto;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .url {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .url {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .url {
+    font-size: 12px;
+  }
+
+  .databox {
+    margin: auto 15px auto auto;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .url {
+    font-size: 10px;
+  }
+}

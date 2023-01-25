@@ -46,8 +46,7 @@ export const forecastSlice = createSlice({
 
 export const fetchLocation = createAsyncThunk('fetch/location', async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get('http://api.ipstack.com/check?access_key=2fdefcdc88f3daf2e684771201b7e261')
-    console.log(data)
+    const { data } = await axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=e25e2c9dd85d461e8f2c79dcac6b978f')
     thunkAPI.dispatch(forecastSlice.actions.setLocation({
       city: data.city,
       latitude: data.latitude,
