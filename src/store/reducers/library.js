@@ -30,16 +30,17 @@ export const fetchPopularBooks = createAsyncThunk('fetch/popularBooks', async (P
         id: data.results[key].id,
       })
     }
-    thunkApi.dispatch(librarySlice.actions.setPopularBooks(popularBooks.slice(0, 8)))
+    thunkApi.dispatch(librarySlice.actions.setPopularBooks(popularBooks))
   } catch (ignore) {
     console.log(ignore)
     return null
   }
 })
 
-export const fetchSearchResults = createAsyncThunk('fetch/searchResults', async (Query, thunkApi) => {
+export const fetchSearchResults = createAsyncThunk('fetch/searchResults', async (SearchParams, thunkApi) => {
   try {
-    const { data } = await axios.get(`https://gutendex.com/books?search=${Query}`)
+    const { data } = await axios.get(`https://gutendex.com/books?page=${SearchParams.pageNumber}&search=${SearchParams.searchLineValue}`)
+    console.log(data)
     const searchResults = []
     for (const key in data.results) {
       searchResults.push({
@@ -48,7 +49,7 @@ export const fetchSearchResults = createAsyncThunk('fetch/searchResults', async 
         id: data.results[key].id,
       })
     }
-    thunkApi.dispatch(librarySlice.actions.setSearchResults(searchResults.slice(0, 8)))
+    thunkApi.dispatch(librarySlice.actions.setSearchResults(searchResults))
   } catch (ignore) {
     console.log(ignore)
     return null

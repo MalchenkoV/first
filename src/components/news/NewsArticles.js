@@ -9,6 +9,7 @@ export function NewsArticles () {
   const dispatch = useDispatch()
 
   const news = useSelector((state) => state.articles.articles)
+  const latestNews = news.slice(-10, news.length)
   const title = useSelector((state) => state.articles.title)
   const url = useSelector((state) => state.articles.url)
   const lastFetchAt = useSelector((state) => state.articles.lastFetchAt)
@@ -32,7 +33,7 @@ export function NewsArticles () {
     <div className={styles.databox}>
       <a href={url} className={styles.title} target="_blank" rel="noopener noreferrer">{title}: Last 10 articles</a>
       <ul>
-        {news.map((item) => (
+        {latestNews.map((item) => (
           <li className={styles.url} key={item.url}>
             <a href={item.url} className={styles.url} target="_blank">{item.title}</a>
           </li>
