@@ -4,6 +4,7 @@ import { Forecast } from '../forecast/Forecast'
 import { Holidays } from '../holidays/Holidays'
 import { NewsArticles } from '../news/NewsArticles'
 import { Library } from '../library/Library'
+import { UserForm } from '../userForm/UserForm'
 
 import styles from './styles.module.css'
 
@@ -20,22 +21,22 @@ export default function App () {
             <li><a href='#library' className={styles.link}>Library</a></li>
           </ul>
         </nav>
-        <div className={styles.add_info}>
-          <p>Здесь будут интересные вещи</p>
-        </div>
+        <section className={styles.add_info}>
+          <UserForm />
+        </section>
       </header>
       <main className={styles.App_main}>
         <section className={styles.weather} id='weather'>
-          <Forecast />
+          {/* <Forecast /> */}
         </section>
         <section className={styles.holiday} id='holiday'>
-          <Holidays />
+          {/* <Holidays /> */}
         </section>
         <section className={styles.news} id='news'>
-          <NewsArticles />
+          {/* <NewsArticles /> */}
         </section>
         <section className={styles.library} id='library'>
-          <Library />
+          {/* <Library /> */}
         </section>
       </main>
       <footer className={styles.App_footer}>@Created by MalchenkoV</footer>

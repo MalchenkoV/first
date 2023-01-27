@@ -16,12 +16,14 @@ import newsReducer from './reducers/news'
 import holidaysReducer from './reducers/holidays'
 import forecastReducer from './reducers/forecasts'
 import libraryReducer from './reducers/library'
+import userformReducer from './reducers/userform'
 
 const rootReducer = combineReducers({
   articles: newsReducer,
   holidays: holidaysReducer,
   forecast: forecastReducer,
   library: libraryReducer,
+  userform: userformReducer,
 })
 
 const persistConfig = {
