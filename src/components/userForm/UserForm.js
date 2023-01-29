@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchLogout, fetchUserData, formSlice, postCreateUser, postLoginUser } from '../../store/reducers/userform'
+import { fetchLogout, fetchUserList, formSlice, fetchCreateUser, fetchLoginUser } from '../../store/reducers/userform'
 
 import styles from './styles.module.css'
 
@@ -18,16 +18,16 @@ export function UserForm () {
 
   function handleLoginChange () {
     setLoginValue({
-      email: document.getElementById('').value,
-      password: document.getElementById('').value,
+      email: document.getElementById('loginEmail').value,
+      password: document.getElementById('loginPassword').value,
     })
   }
 
   function handleSignupChange () {
     setSignupValue({
-      email: document.getElementById('').value,
-      password: document.getElementById('').value,
-      username: document.getElementById('').value,
+      email: document.getElementById('signupEmail').value,
+      password: document.getElementById('signupPassword').value,
+      username: document.getElementById('signupName').value,
     })
   }
 
@@ -45,16 +45,15 @@ export function UserForm () {
 
   function handleLoginSubmit () {
     handleLoginOpenClose()
-    dispatch(postLoginUser(loginValue))
-    dispatch(fetchUserData())
+    dispatch(fetchLoginUser(loginValue))
+    dispatch(fetchUserList(loginValue))
     handleSubmitButton()
   }
 
   function handleSignupSubmit () {
     handleSignupOpenClose()
-    dispatch(postCreateUser(signupValue))
-    dispatch(fetchUserData())
-    handleSubmitButton()
+    dispatch(fetchCreateUser(signupValue))
+    dispatch(fetchUserList(signupValue))
   }
 
   function handleLogout () {
@@ -75,8 +74,8 @@ export function UserForm () {
         <div className={styles.popup_container}>
           <h2 className={styles.popup_title}>Enter your data</h2>
           <form className={styles.popup_form}>
-            <input className={styles.popup_textInput} type='email' placeholder='Enter your email' onChange={handleLoginChange}></input>
-            <input className={styles.popup_textInput} type='password' placeholder='Enter your password' onChange={handleLoginChange}></input>
+            <input className={styles.popup_textInput} id='loginEmail' type='email' placeholder='Enter your email' onChange={handleLoginChange}></input>
+            <input className={styles.popup_textInput} id='loginPassword' type='password' placeholder='Enter your password' onChange={handleLoginChange}></input>
             <input className={styles.popup_submitButton} type='submit' onClick={handleLoginSubmit}></input>
           </form>
           <button className={styles.close_icon} onClick={handleLoginOpenClose}></button>
@@ -86,9 +85,9 @@ export function UserForm () {
         <div className={styles.popup_container}>
           <h2 className={styles.popup_title}>Enter your data</h2>
           <form className={styles.popup_form}>
-            <input className={styles.popup_textInput} type='text' placeholder='Enter your name' onChange={handleSignupChange}></input>
-            <input className={styles.popup_textInput} type='email' placeholder='Enter your email' onChange={handleSignupChange}></input>
-            <input className={styles.popup_textInput} type='password' placeholder='Enter your password' onChange={handleSignupChange}></input>
+            <input className={styles.popup_textInput} id='signupName' type='text' placeholder='Enter your name' onChange={handleSignupChange}></input>
+            <input className={styles.popup_textInput} id='signupEmail' type='email' placeholder='Enter your email' onChange={handleSignupChange}></input>
+            <input className={styles.popup_textInput} id='signupPassword' type='password' placeholder='Enter your password' onChange={handleSignupChange}></input>
             <input className={styles.popup_submitButton} type='submit' onClick={handleSignupSubmit}></input>
           </form>
           <button className={styles.close_icon} onClick={handleSignupOpenClose}></button>
