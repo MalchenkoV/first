@@ -18,8 +18,11 @@ export const formSlice = createSlice({
     setSessionId (state, action) {
       state.sessionid = action.payload.sessionid
     },
-    setInitialUser (state, action) {
+    clearState (state, action) {
       state.username = 'User'
+      state.email = ''
+      state.password = ''
+      state.sessionid = ''
     },
   },
 })
@@ -57,6 +60,8 @@ export const fetchLoginUser = createAsyncThunk('fetch/loginUser', async (UserDat
         password: UserData.password,
       },
     })
+    console.log(data)
+
     thunkAPI.dispatch(formSlice.actions.setSessionId({
       sessionid: data.session.id,
     }))
@@ -74,13 +79,9 @@ export const fetchUserList = createAsyncThunk('fetch/userList', async (UserData,
       headers: {
         Authorization: 'Bearer MDk4YTJjOWUtOWE3MS00NDc3LWExYjktMGYwNDg0YWUzZThk',
       },
-      data: {
-        limit: 100,
-        offset: 0,
-      },
     })
     console.log(data)
-    const userName = data.find((item) => item.email === UserData.email)
+    const userName = data.users.find((item) => item.email === UserData.email)
     thunkAPI.dispatch(formSlice.actions.setUserData({
       email: userName.email,
       password: userName.password,
@@ -104,7 +105,7 @@ export const fetchLogout = createAsyncThunk('fetch/logout', async (SessionId, th
         sessionId: SessionId,
       },
     })
-    thunkAPI.dispatch(formSlice.actions.setInitialUser())
+    thunkAPI.dispatch(formSlice.actions.clearState())
   } catch (ignore) {
     console.log(ignore)
     return null
