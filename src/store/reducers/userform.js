@@ -8,6 +8,7 @@ export const formSlice = createSlice({
     password: '',
     username: 'User',
     sessionid: '',
+    id: '',
   },
   reducers: {
     setUserData (state, action) {
@@ -15,8 +16,9 @@ export const formSlice = createSlice({
       state.password = action.payload.password
       state.username = action.payload.username
     },
-    setSessionId (state, action) {
+    setIds (state, action) {
       state.sessionid = action.payload.sessionid
+      state.id = action.payload.id
     },
     clearState (state, action) {
       state.username = 'User'
@@ -38,9 +40,12 @@ export const fetchCreateUser = createAsyncThunk('fetch/createUser', async (UserD
       data: {
         email: UserData.email,
         password: UserData.password,
-        username: UserData.username,
+        username: UserData.name,
       },
     })
+      .catch(function (error) {
+        console.log('!!!!!!!!!', error)
+      })
   } catch (ignore) {
     console.log(ignore)
     return null
@@ -60,10 +65,12 @@ export const fetchLoginUser = createAsyncThunk('fetch/loginUser', async (UserDat
         password: UserData.password,
       },
     })
-    console.log(data)
-
-    thunkAPI.dispatch(formSlice.actions.setSessionId({
+      .catch(function (error) {
+        console.log('!!!!!!!!!', error)
+      })
+    thunkAPI.dispatch(formSlice.actions.setIds({
       sessionid: data.session.id,
+      id: data.session.userId,
     }))
   } catch (ignore) {
     console.log(ignore)
@@ -84,7 +91,7 @@ export const fetchUserList = createAsyncThunk('fetch/userList', async (UserData,
     const userName = data.users.find((item) => item.email === UserData.email)
     thunkAPI.dispatch(formSlice.actions.setUserData({
       email: userName.email,
-      password: userName.password,
+      password: UserData.password,
       username: userName.username,
     }))
   } catch (ignore) {
@@ -103,6 +110,25 @@ export const fetchLogout = createAsyncThunk('fetch/logout', async (SessionId, th
       },
       data: {
         sessionId: SessionId,
+      },
+    })
+    thunkAPI.dispatch(formSlice.actions.clearState())
+  } catch (ignore) {
+    console.log(ignore)
+    return null
+  }
+})
+
+export const fetchDelete = createAsyncThunk('fetch/delete', async (UserId, thunkAPI) => {
+  try {
+    const { data } = await axios({
+      method: 'post',
+      url: 'https://api.m3o.com/v1/user/Delete',
+      headers: {
+        Authorization: 'Bearer MDk4YTJjOWUtOWE3MS00NDc3LWExYjktMGYwNDg0YWUzZThk',
+      },
+      data: {
+        id: UserId,
       },
     })
     thunkAPI.dispatch(formSlice.actions.clearState())

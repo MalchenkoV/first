@@ -2,7 +2,7 @@
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchLogout, fetchUserList, formSlice, fetchCreateUser, fetchLoginUser } from '../../store/reducers/userform'
+import userform, { fetchLogout, fetchUserList, formSlice, fetchCreateUser, fetchLoginUser, fetchDelete } from '../../store/reducers/userform'
 
 import styles from './styles.module.css'
 
@@ -10,91 +10,88 @@ export function UserForm () {
   const dispatch = useDispatch()
   const username = useSelector((state) => state.userform.username)
   const sessionId = useSelector((state) => state.userform.sessionid)
-  const [isActiveLoginForm, setActiveLoginForm] = useState(false)
-  const [isActiveSignupForm, setActiveSignupForm] = useState(false)
-  const [isActiveSubmitButton, setActiveSubmitButton] = useState(true)
-  const [signupValue, setSignupValue] = useState()
-  const [loginValue, setLoginValue] = useState()
+  const userId = useSelector((state) => state.userform.id)
+  const [isActiveForm, setActiveForm] = useState(false)
+  const [isActiveMenuButtons, setActiveMenuButtons] = useState(true)
+  const [isActiveInput, setActiveInput] = useState(true)
+  const [inputValue, setInputValue] = useState({
+    email: '',
+    password: '',
+    name: '',
+  })
 
-  function handleLoginChange () {
-    setLoginValue({
-      email: document.getElementById('loginEmail').value,
-      password: document.getElementById('loginPassword').value,
+  function handleChange () {
+    setInputValue({
+      email: document.getElementById('Email').value,
+      password: document.getElementById('Password').value,
+      name: document.getElementById('Name').value,
     })
   }
 
-  function handleSignupChange () {
-    setSignupValue({
-      email: document.getElementById('signupEmail').value,
-      password: document.getElementById('signupPassword').value,
-      username: document.getElementById('signupName').value,
+  function handleOpenClose () {
+    setActiveForm(!isActiveForm)
+    setInputValue({
+      email: '',
+      password: '',
+      name: '',
     })
   }
 
-  function handleLoginOpenClose () {
-    setActiveLoginForm(!isActiveLoginForm)
-    document.getElementById('loginEmail').value = ''
-    document.getElementById('loginPassword').value = ''
+  function onClickSubmitButton () {
+    setActiveMenuButtons(!isActiveMenuButtons)
   }
 
-  function handleSignupOpenClose () {
-    setActiveSignupForm(!isActiveSignupForm)
-    document.getElementById('signupEmail').value = ''
-    document.getElementById('signupPassword').value = ''
-    document.getElementById('signupName').value = ''
+  function handleClickLoginButton () {
+    handleOpenClose()
+    setActiveInput(!isActiveInput)
   }
 
-  function handleSubmitButton () {
-    setActiveSubmitButton(!isActiveSubmitButton)
+  function handleClickCloseIcon () {
+    handleOpenClose()
+    setActiveInput(true)
   }
 
-  const handleLoginSubmit = useCallback(() => {
-    handleLoginOpenClose()
-    dispatch(fetchUserList(loginValue))
-    dispatch(fetchLoginUser(loginValue))
-    handleSubmitButton()
-  }, [loginValue])
-
-  const handleSignupSubmit = useCallback(() => {
-    handleSignupOpenClose()
-    dispatch(fetchCreateUser(signupValue))
-  }, [signupValue])
+  const handleSubmit = useCallback(() => {
+    if (isActiveInput === true) {
+      dispatch(fetchCreateUser(inputValue))
+    } else {
+      dispatch(fetchUserList(inputValue))
+      dispatch(fetchLoginUser(inputValue))
+      onClickSubmitButton()
+    }
+    handleOpenClose()
+    setActiveInput(true)
+  }, [inputValue])
 
   const handleLogout = useCallback(() => {
-    handleSubmitButton()
-    dispatch(formSlice.actions.clearState())
+    onClickSubmitButton()
     dispatch(fetchLogout(sessionId))
   }, [sessionId])
+
+  const handleDelete = useCallback(() => {
+    onClickSubmitButton()
+    dispatch(fetchDelete(userId))
+  }, [userId])
 
   return (
     <div>
       <h2>Welcome, {username}!</h2>
       <div className={styles.buttonsBox}>
-        <button className={isActiveSubmitButton ? styles.menu_buttons_disactive : styles.menu_buttons} onClick={handleLogout}>Log out</button>
-        <button className={isActiveSubmitButton ? styles.menu_buttons : styles.menu_buttons_disactive} onClick={handleLoginOpenClose}>Log in</button>
-        <button className={isActiveSubmitButton ? styles.menu_buttons : styles.menu_buttons_disactive} onClick={handleSignupOpenClose}>Sign up</button>
+        <button className={isActiveMenuButtons ? styles.menu_buttons : styles.disactive} onClick={handleClickLoginButton}>Log in</button>
+        <button className={isActiveMenuButtons ? styles.menu_buttons : styles.disactive} onClick={handleOpenClose}>Sign up</button>
+        <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleLogout}>Log out</button>
+        <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleDelete}>Delete account</button>
       </div>
-      <div className={isActiveLoginForm ? styles.popup_active : styles.popup}>
+      <div className={isActiveForm ? styles.popup : styles.disactive}>
         <div className={styles.popup_container}>
           <h2 className={styles.popup_title}>Enter your data</h2>
           <form className={styles.popup_form}>
-            <input className={styles.popup_textInput} id='loginEmail' type='email' placeholder='Enter your email' onChange={handleLoginChange}></input>
-            <input className={styles.popup_textInput} id='loginPassword' type='password' placeholder='Enter your password' onChange={handleLoginChange}></input>
-            <input className={styles.popup_submitButton} type='button' onClick={handleLoginSubmit} value='Submit'></input>
+            <input className={isActiveInput ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
+            <input className={styles.popup_textInput} id='Email' type='email' value={inputValue.email} placeholder='Enter your email' onChange={handleChange}></input>
+            <input className={styles.popup_textInput} id='Password' type='password' value={inputValue.password} placeholder='Enter your password' onChange={handleChange}></input>
+            <input className={styles.popup_submitButton} type='button' onClick={handleSubmit} value='Submit'></input>
           </form>
-          <button className={styles.close_icon} onClick={handleLoginOpenClose}></button>
-        </div>
-      </div>
-      <div className={isActiveSignupForm ? styles.popup_active : styles.popup}>
-        <div className={styles.popup_container}>
-          <h2 className={styles.popup_title}>Enter your data</h2>
-          <form className={styles.popup_form}>
-            <input className={styles.popup_textInput} id='signupName' type='text' placeholder='Enter your name' onChange={handleSignupChange}></input>
-            <input className={styles.popup_textInput} id='signupEmail' type='email' placeholder='Enter your email' onChange={handleSignupChange}></input>
-            <input className={styles.popup_textInput} id='signupPassword' type='password' placeholder='Enter your password' onChange={handleSignupChange}></input>
-            <input className={styles.popup_submitButton} type='button' onClick={handleSignupSubmit} value='Submit'></input>
-          </form>
-          <button className={styles.close_icon} onClick={handleSignupOpenClose}></button>
+          <button className={styles.close_icon} onClick={handleClickCloseIcon}></button>
         </div>
       </div>
     </div>
