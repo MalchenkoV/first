@@ -12,6 +12,7 @@ export function UserForm () {
   const sessionId = useSelector((state) => state.userform.sessionid)
   const userId = useSelector((state) => state.userform.id)
   const errMessage = useSelector((state) => state.userform.error)
+  const email = useSelector((state) => state.userform.email)
   const [isActivePopup, setActivePopup] = useState(false)
   const [isActiveMenuButtons, setActiveMenuButtons] = useState(true)
   const [isRegister, setIsRegister] = useState(true)
@@ -30,34 +31,45 @@ export function UserForm () {
     })
   }
 
-  function handleOpenClose () {
-    // console.trace(123)
-    setActivePopup(!isActivePopup)
+  function handleOpen () {
+    setActivePopup(true)
+  }
+
+  function handleClose () {
+    setActivePopup(false)
     setInputValue({
       email: '',
       password: '',
-      name: '',
     })
+    setIsRegister(true)
   }
 
-  function onClickSubmitButton () {
+  useEffect(() => {
     if (sessionId !== '') {
-      setActiveMenuButtons(!isActiveMenuButtons)
+      setActiveMenuButtons(false)
+    } else {
+      setActiveMenuButtons(true)
     }
-  }
+  }, [sessionId])
+
+  useEffect(() => {
+    if (email !== '') {
+      handleClose()
+    }
+  }, [email])
 
   function handleClickLoginButton () {
-    handleOpenClose()
+    handleOpen()
     setIsRegister(false)
   }
 
   function handleClickRegisterButton () {
-    handleOpenClose()
+    handleOpen()
     setIsRegister(true)
   }
 
   function handleClickCloseIcon () {
-    handleOpenClose()
+    handleClose()
     setActiveForm(true)
     dispatch(formSlice.actions.clearState())
   }
@@ -72,22 +84,16 @@ export function UserForm () {
   }, [inputValue])
 
   useEffect(() => {
-    if (errMessage === '') {
-      handleOpenClose()
-      setIsRegister(true)
-      onClickSubmitButton()
-    } else {
+    if (errMessage !== '') {
       setActiveForm(!isActiveForm)
     }
   }, [errMessage])
 
   const handleLogout = useCallback(() => {
-    onClickSubmitButton()
     dispatch(fetchLogout(sessionId))
   }, [sessionId])
 
   const handleDelete = useCallback(() => {
-    onClickSubmitButton()
     dispatch(fetchDelete(userId))
   }, [userId])
 

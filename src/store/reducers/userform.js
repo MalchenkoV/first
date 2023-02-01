@@ -25,12 +25,13 @@ export const formSlice = createSlice({
       state.username = 'User'
       state.email = ''
       state.password = ''
-      state.sessionid = ''
       state.error = ''
-      state.id = ''
     },
     catchError (state, action) {
       state.error = action.payload.error
+    },
+    clearId (state, action) {
+      state.sessionid = ''
     },
   },
 })
@@ -49,6 +50,11 @@ export const fetchCreateUser = createAsyncThunk('fetch/createUser', async (UserD
         username: UserData.name,
       },
     })
+    thunkAPI.dispatch(formSlice.actions.setUserData({
+      email: data.account.email,
+      password: UserData.password,
+      username: data.account.username,
+    }))
   } catch (error) {
     console.log(error)
     thunkAPI.dispatch(formSlice.actions.catchError({
@@ -116,6 +122,7 @@ export const fetchLogout = createAsyncThunk('fetch/logout', async (SessionId, th
         sessionId: SessionId,
       },
     })
+    thunkAPI.dispatch(formSlice.actions.clearId())
     thunkAPI.dispatch(formSlice.actions.clearState())
   } catch (ignore) {
     console.log(ignore)
