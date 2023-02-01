@@ -2,7 +2,7 @@
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import userform, { fetchLogout, fetchUserList, formSlice, fetchCreateUser, fetchLoginUser, fetchDelete } from '../../store/reducers/userform'
+import { fetchLogout, fetchUserList, fetchCreateUser, fetchLoginUser, fetchDelete, formSlice } from '../../store/reducers/userform'
 
 import styles from './styles.module.css'
 
@@ -11,9 +11,11 @@ export function UserForm () {
   const username = useSelector((state) => state.userform.username)
   const sessionId = useSelector((state) => state.userform.sessionid)
   const userId = useSelector((state) => state.userform.id)
-  const [isActiveForm, setActiveForm] = useState(false)
+  const errMessage = useSelector((state) => state.userform.error)
+  const [isActivePopup, setActivePopup] = useState(false)
   const [isActiveMenuButtons, setActiveMenuButtons] = useState(true)
   const [isActiveInput, setActiveInput] = useState(true)
+  const [isActiveForm, setActiveForm] = useState(true)
   const [inputValue, setInputValue] = useState({
     email: '',
     password: '',
@@ -29,7 +31,8 @@ export function UserForm () {
   }
 
   function handleOpenClose () {
-    setActiveForm(!isActiveForm)
+    // console.trace(123)
+    setActivePopup(!isActivePopup)
     setInputValue({
       email: '',
       password: '',
@@ -38,7 +41,9 @@ export function UserForm () {
   }
 
   function onClickSubmitButton () {
-    setActiveMenuButtons(!isActiveMenuButtons)
+    if (sessionId !== '') {
+      setActiveMenuButtons(!isActiveMenuButtons)
+    }
   }
 
   function handleClickLoginButton () {
@@ -49,19 +54,30 @@ export function UserForm () {
   function handleClickCloseIcon () {
     handleOpenClose()
     setActiveInput(true)
+    setActiveForm(true)
+    dispatch(formSlice.actions.clearState())
+  }
+
+  function catchError () {
+    if (errMessage === '') {
+      handleOpenClose()
+      setActiveInput(true)
+      onClickSubmitButton()
+    } else {
+      setActiveForm(!isActiveForm)
+    }
   }
 
   const handleSubmit = useCallback(() => {
     if (isActiveInput === true) {
       dispatch(fetchCreateUser(inputValue))
+      catchError(errMessage)
     } else {
-      dispatch(fetchUserList(inputValue))
       dispatch(fetchLoginUser(inputValue))
-      onClickSubmitButton()
+      dispatch(fetchUserList(inputValue))
+      catchError(errMessage)
     }
-    handleOpenClose()
-    setActiveInput(true)
-  }, [inputValue])
+  }, [inputValue, errMessage])
 
   const handleLogout = useCallback(() => {
     onClickSubmitButton()
@@ -82,10 +98,11 @@ export function UserForm () {
         <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleLogout}>Log out</button>
         <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleDelete}>Delete account</button>
       </div>
-      <div className={isActiveForm ? styles.popup : styles.disactive}>
+      <div className={isActivePopup ? styles.popup : styles.disactive}>
         <div className={styles.popup_container}>
           <h2 className={styles.popup_title}>Enter your data</h2>
-          <form className={styles.popup_form}>
+          <h2 className={isActiveForm ? styles.disactive : styles.popup_title}>Error! {errMessage}</h2>
+          <form className={isActiveForm ? styles.popup_form : styles.disactive}>
             <input className={isActiveInput ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
             <input className={styles.popup_textInput} id='Email' type='email' value={inputValue.email} placeholder='Enter your email' onChange={handleChange}></input>
             <input className={styles.popup_textInput} id='Password' type='password' value={inputValue.password} placeholder='Enter your password' onChange={handleChange}></input>

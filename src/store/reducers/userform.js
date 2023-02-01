@@ -9,6 +9,7 @@ export const formSlice = createSlice({
     username: 'User',
     sessionid: '',
     id: '',
+    error: '',
   },
   reducers: {
     setUserData (state, action) {
@@ -25,11 +26,16 @@ export const formSlice = createSlice({
       state.email = ''
       state.password = ''
       state.sessionid = ''
+      state.error = ''
+      state.id = ''
+    },
+    catchError (state, action) {
+      state.error = action.payload.error
     },
   },
 })
 
-export const fetchCreateUser = createAsyncThunk('fetch/createUser', async (UserData) => {
+export const fetchCreateUser = createAsyncThunk('fetch/createUser', async (UserData, thunkAPI) => {
   try {
     const { data } = await axios({
       method: 'post',
@@ -43,12 +49,11 @@ export const fetchCreateUser = createAsyncThunk('fetch/createUser', async (UserD
         username: UserData.name,
       },
     })
-      .catch(function (error) {
-        console.log('!!!!!!!!!', error)
-      })
-  } catch (ignore) {
-    console.log(ignore)
-    return null
+  } catch (error) {
+    console.log(error)
+    thunkAPI.dispatch(formSlice.actions.catchError({
+      error: error.response.data.detail,
+    }))
   }
 })
 
@@ -65,16 +70,15 @@ export const fetchLoginUser = createAsyncThunk('fetch/loginUser', async (UserDat
         password: UserData.password,
       },
     })
-      .catch(function (error) {
-        console.log('!!!!!!!!!', error)
-      })
     thunkAPI.dispatch(formSlice.actions.setIds({
       sessionid: data.session.id,
       id: data.session.userId,
     }))
-  } catch (ignore) {
-    console.log(ignore)
-    return null
+  } catch (error) {
+    console.log(error)
+    thunkAPI.dispatch(formSlice.actions.catchError({
+      error: error.response.data.detail,
+    }))
   }
 })
 
