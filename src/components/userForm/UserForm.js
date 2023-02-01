@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchLogout, fetchUserList, fetchCreateUser, fetchLoginUser, fetchDelete, formSlice } from '../../store/reducers/userform'
@@ -14,7 +14,7 @@ export function UserForm () {
   const errMessage = useSelector((state) => state.userform.error)
   const [isActivePopup, setActivePopup] = useState(false)
   const [isActiveMenuButtons, setActiveMenuButtons] = useState(true)
-  const [isActiveInput, setActiveInput] = useState(true)
+  const [isRegister, setIsRegister] = useState(true)
   const [isActiveForm, setActiveForm] = useState(true)
   const [inputValue, setInputValue] = useState({
     email: '',
@@ -48,36 +48,38 @@ export function UserForm () {
 
   function handleClickLoginButton () {
     handleOpenClose()
-    setActiveInput(!isActiveInput)
+    setIsRegister(false)
+  }
+
+  function handleClickRegisterButton () {
+    handleOpenClose()
+    setIsRegister(true)
   }
 
   function handleClickCloseIcon () {
     handleOpenClose()
-    setActiveInput(true)
     setActiveForm(true)
     dispatch(formSlice.actions.clearState())
   }
 
-  function catchError () {
+  const handleSubmit = useCallback(() => {
+    if (isRegister === true) {
+      dispatch(fetchCreateUser(inputValue))
+    } else {
+      dispatch(fetchLoginUser(inputValue))
+      dispatch(fetchUserList(inputValue))
+    }
+  }, [inputValue])
+
+  useEffect(() => {
     if (errMessage === '') {
       handleOpenClose()
-      setActiveInput(true)
+      setIsRegister(true)
       onClickSubmitButton()
     } else {
       setActiveForm(!isActiveForm)
     }
-  }
-
-  const handleSubmit = useCallback(() => {
-    if (isActiveInput === true) {
-      dispatch(fetchCreateUser(inputValue))
-      catchError(errMessage)
-    } else {
-      dispatch(fetchLoginUser(inputValue))
-      dispatch(fetchUserList(inputValue))
-      catchError(errMessage)
-    }
-  }, [inputValue, errMessage])
+  }, [errMessage])
 
   const handleLogout = useCallback(() => {
     onClickSubmitButton()
@@ -94,7 +96,7 @@ export function UserForm () {
       <h2>Welcome, {username}!</h2>
       <div className={styles.buttonsBox}>
         <button className={isActiveMenuButtons ? styles.menu_buttons : styles.disactive} onClick={handleClickLoginButton}>Log in</button>
-        <button className={isActiveMenuButtons ? styles.menu_buttons : styles.disactive} onClick={handleOpenClose}>Sign up</button>
+        <button className={isActiveMenuButtons ? styles.menu_buttons : styles.disactive} onClick={handleClickRegisterButton}>Sign up</button>
         <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleLogout}>Log out</button>
         <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleDelete}>Delete account</button>
       </div>
@@ -103,7 +105,7 @@ export function UserForm () {
           <h2 className={styles.popup_title}>Enter your data</h2>
           <h2 className={isActiveForm ? styles.disactive : styles.popup_title}>Error! {errMessage}</h2>
           <form className={isActiveForm ? styles.popup_form : styles.disactive}>
-            <input className={isActiveInput ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
+            <input className={isRegister ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
             <input className={styles.popup_textInput} id='Email' type='email' value={inputValue.email} placeholder='Enter your email' onChange={handleChange}></input>
             <input className={styles.popup_textInput} id='Password' type='password' value={inputValue.password} placeholder='Enter your password' onChange={handleChange}></input>
             <input className={styles.popup_submitButton} type='button' onClick={handleSubmit} value='Submit'></input>
