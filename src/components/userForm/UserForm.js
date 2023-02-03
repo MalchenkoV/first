@@ -14,9 +14,9 @@ export function UserForm () {
   const errMessage = useSelector((state) => state.userform.error)
   const email = useSelector((state) => state.userform.email)
   const [isActivePopup, setActivePopup] = useState(false)
-  const [isActiveMenuButtons, setActiveMenuButtons] = useState(true)
+  const [isLogin, setisLogin] = useState(false)
   const [isRegister, setIsRegister] = useState(true)
-  const [isActiveForm, setActiveForm] = useState(true)
+  const [isError, setIsError] = useState(false)
   const [inputValue, setInputValue] = useState({
     email: '',
     password: '',
@@ -46,9 +46,9 @@ export function UserForm () {
 
   useEffect(() => {
     if (sessionId !== '') {
-      setActiveMenuButtons(false)
+      setisLogin(true)
     } else {
-      setActiveMenuButtons(true)
+      setisLogin(false)
     }
   }, [sessionId])
 
@@ -70,7 +70,7 @@ export function UserForm () {
 
   function handleClickCloseIcon () {
     handleClose()
-    setActiveForm(true)
+    setIsError(false)
     dispatch(formSlice.actions.clearState())
   }
 
@@ -85,7 +85,7 @@ export function UserForm () {
 
   useEffect(() => {
     if (errMessage !== '') {
-      setActiveForm(!isActiveForm)
+      setIsError(!isError)
     }
   }, [errMessage])
 
@@ -101,16 +101,16 @@ export function UserForm () {
     <div>
       <h2>Welcome, {username}!</h2>
       <div className={styles.buttonsBox}>
-        <button className={isActiveMenuButtons ? styles.menu_buttons : styles.disactive} onClick={handleClickLoginButton}>Log in</button>
-        <button className={isActiveMenuButtons ? styles.menu_buttons : styles.disactive} onClick={handleClickRegisterButton}>Sign up</button>
-        <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleLogout}>Log out</button>
-        <button className={isActiveMenuButtons ? styles.disactive : styles.menu_buttons} onClick={handleDelete}>Delete account</button>
+        <button className={isLogin ? styles.disactive : styles.menu_buttons} onClick={handleClickLoginButton}>Log in</button>
+        <button className={isLogin ? styles.disactive : styles.menu_buttons} onClick={handleClickRegisterButton}>Sign up</button>
+        <button className={isLogin ? styles.menu_buttons : styles.disactive} onClick={handleLogout}>Log out</button>
+        <button className={isLogin ? styles.menu_buttons : styles.disactive} onClick={handleDelete}>Delete account</button>
       </div>
       <div className={isActivePopup ? styles.popup : styles.disactive}>
         <div className={styles.popup_container}>
           <h2 className={styles.popup_title}>Enter your data</h2>
-          <h2 className={isActiveForm ? styles.disactive : styles.popup_title}>Error! {errMessage}</h2>
-          <form className={isActiveForm ? styles.popup_form : styles.disactive}>
+          <h2 className={isError ? styles.popup_title : styles.disactive}>Error! {errMessage}</h2>
+          <form className={isError ? styles.disactive : styles.popup_form}>
             <input className={isRegister ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
             <input className={styles.popup_textInput} id='Email' type='email' value={inputValue.email} placeholder='Enter your email' onChange={handleChange}></input>
             <input className={styles.popup_textInput} id='Password' type='password' value={inputValue.password} placeholder='Enter your password' onChange={handleChange}></input>
