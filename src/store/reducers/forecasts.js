@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import ky from 'ky'
 import { useSelector } from 'react-redux'
 
 import { pad } from '../../utils'
@@ -14,11 +16,18 @@ export const forecastSlice = createSlice({
     city: '',
     latitude: '',
     longitude: '',
+    sunrise: '',
+    sunset: '',
+    earthquakes: '',
   },
   reducers: {
     setForecast (state, action) {
       state.temperature = action.payload.temperature
       state.windspeed = action.payload.windspeed
+    },
+    setSuntimes (state, action) {
+      state.sunrise = (Number(action.payload.sunrise.slice(0, -9)) + 4) + (action.payload.sunrise.slice(-9, action.payload.sunrise.length))
+      state.sunset = (Number(action.payload.sunset.slice(0, -9)) + 4) + (action.payload.sunset.slice(-9, action.payload.sunset.length))
     },
     setDate (state, action) {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -33,6 +42,9 @@ export const forecastSlice = createSlice({
       state.latitude = action.payload.latitude
       state.longitude = action.payload.longitude
     },
+    setCountEarthquakes (state, action) {
+      state.earthquakes = action.payload.earthquakes
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchForecast.pending, (state) => {
@@ -40,6 +52,9 @@ export const forecastSlice = createSlice({
       state.windspeed = 'loading...'
       state.time = 'loading...'
       state.day = 'loading...'
+      state.earthquakes = 'loading...'
+      state.sunrise = 'loading...'
+      state.sunset = 'loading...'
     })
   },
 })
@@ -77,6 +92,42 @@ export const fetchDate = createAsyncThunk('fetch/date', async (_, thunkAPI) => {
     thunkAPI.dispatch(forecastSlice.actions.setDate())
   } catch (ignore) {
     console.log(ignore)
+    return null
+  }
+})
+
+export const fetchSuntimes = createAsyncThunk('fetch/suntimes', async (userLocation, thunkAPI) => {
+  try {
+    const data = await ky.get(`https://api.sunrise-sunset.org/json?lat=${userLocation.latitude}&lng=${userLocation.longitude}`).json()
+    thunkAPI.dispatch(forecastSlice.actions.setSuntimes({
+      sunrise: data.results.sunrise,
+      sunset: data.results.sunset,
+    }))
+  } catch (ignore) {
+    console.log(ignore)
+    return null
+  }
+})
+
+export const fetchEarthquakes = createAsyncThunk('fetch/earthquakes', async (userLocation, thunkAPI) => {
+  try {
+    const api = ky.extend({
+      hooks: {
+        beforeRequest: [
+          (request) => {
+            request.headers.set('Access-Control-Allow-Origin', '*')
+          },
+        ],
+      },
+    })
+
+    const data = await api.get(`https://earthquake.usgs.gov/fdsnws/event/1/count?format=geojson&latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&maxradiuskm=500&minmagnitude=5`).json()
+    console.log(data)
+    thunkAPI.dispatch(forecastSlice.actions.setCountEarthquakes({
+      earthquakes: data.count,
+    }))
+  } catch (error) {
+    console.log(error)
     return null
   }
 })

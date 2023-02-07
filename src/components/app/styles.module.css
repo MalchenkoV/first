@@ -91,6 +91,13 @@
   background-color: gainsboro;
 }
 
+.upload {
+  display: flex;
+  justify-content: flex-end;
+  height: 100vh;
+  background-color: skyblue;
+}
+
 .App_footer {
   position: absolute;
   right: 0;

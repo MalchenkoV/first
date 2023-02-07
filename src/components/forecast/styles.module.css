@@ -3,8 +3,8 @@
   color: white;
 }
 
-.temp .wind .time .dayToday {
-  margin-top: 40px;
+.parameter {
+  margin-top: 20px;
   font-size: 20px;
 }
 
@@ -34,19 +34,7 @@
     font-size: 30px;
   }
 
-  .dayToday {
-    font-size: 15px;
-  }
-
-  .temp {
-    font-size: 15px;
-  }
-
-  .time {
-    font-size: 15px;
-  }
-
-  .wind {
+  .parameter {
     font-size: 15px;
   }
 
@@ -60,19 +48,7 @@
     font-size: 20px;
   }
 
-  .dayToday {
-    font-size: 10px;
-  }
-
-  .temp {
-    font-size: 10px;
-  }
-
-  .time {
-    font-size: 10px;
-  }
-
-  .wind {
+  .parameter {
     font-size: 10px;
   }
 
