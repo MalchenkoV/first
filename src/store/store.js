@@ -18,6 +18,7 @@ import forecastReducer from './reducers/forecasts'
 import libraryReducer from './reducers/library'
 import userformReducer from './reducers/userform'
 import uploadReducer from './reducers/uploadfile'
+import mapsReducer from './reducers/maps'
 
 const rootReducer = combineReducers({
   articles: newsReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   library: libraryReducer,
   userform: userformReducer,
   uploadfiles: uploadReducer,
+  maps: mapsReducer,
 })
 
 const persistConfig = {

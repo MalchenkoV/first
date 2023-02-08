@@ -95,7 +95,14 @@
   display: flex;
   justify-content: flex-end;
   height: 100vh;
-  background-color: skyblue;
+  background-color: cadetblue;
+}
+
+.maps {
+  display: flex;
+  justify-content: flex-end;
+  height: 100vh;
+  background-color: bisque;
 }
 
 .App_footer {

@@ -44,7 +44,11 @@ export const fetchServerUrl = createAsyncThunk('fetch/serverurl', async (_, thun
 
 export const fetchUploadFile = createAsyncThunk('fetch/uploadfile', async (ServerData, thunkAPI) => {
   try {
-    const data = await ky.post(`${ServerData.url}?sess_id=${ServerData.sessId}&utype=prem`, { data: toFormData(ServerData.file) }).json()
+    const data = await axios({
+      method: 'post',
+      url: `${ServerData.url}?sess_id=${ServerData.sessId}&utype=prem`,
+      data: toFormData(ServerData.file),
+    })
     console.log(ServerData)
   } catch (ignore) {
     console.log(ignore)
@@ -56,15 +60,6 @@ export const fetchFileList = createAsyncThunk('fetch/fileList', async (_, thunkA
   try {
     const data = await ky.get('https://api-v2.ddownload.com/api/file/list?key=3319874tcf2ywwk4lcosrb')
     thunkAPI.dispatch(uploadSlice.actions.setFileList(data))
-  } catch (ignore) {
-    console.log(ignore)
-    return null
-  }
-})
-
-export const fetchConverter = createAsyncThunk('fetch/converter', async (_, thunkAPI) => {
-  try {
-    const data = await ky.get()
   } catch (ignore) {
     console.log(ignore)
     return null
