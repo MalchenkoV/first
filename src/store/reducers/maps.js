@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import base64 from 'base-64'
+import UTF8 from 'utf-8'
 
 export const mapsSlice = createSlice({
   name: 'maps',
   initialState: {
     latitude: '',
     longitude: '',
-    image: undefined,
+    image: '',
   },
   reducers: {
     setLocation (state, action) {
@@ -34,9 +36,12 @@ export const fetchLocation = createAsyncThunk('fetch/location', async (_, thunkA
 
 export const fetchMaps = createAsyncThunk('fetch/maps', async (UserLocation, thunkAPI) => {
   try {
-    const { data } = await axios.get(`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${UserLocation.latitude},${UserLocation.longitude}/12?mapSize=400,400&pp=${UserLocation.latitude},${UserLocation.longitude}&key=AjhFzAhsDYFZisd16U3T_Y_H8-aK2T-6b6BN_CNgA1Vj3MdLsBqgsOlPJsivlOPt`)
-    // thunkAPI.dispatch(mapsSlice.actions.setMap(data))
-    console.log(data)
+    const { data } = await axios.get(`https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/${UserLocation.latitude},${UserLocation.longitude}/10?mapSize=400,400&pp=${UserLocation.latitude},${UserLocation.longitude};66&mapLayer=Basemap,Buildings&key=AjhFzAhsDYFZisd16U3T_Y_H8-aK2T-6b6BN_CNgA1Vj3MdLsBqgsOlPJsivlOPt`)
+    const image = UTF8.setBytesFromString(data)
+    const img = base64.encode(image)
+    thunkAPI.dispatch(mapsSlice.actions.setMap({
+      image: img,
+    }))
   } catch (ignore) {
     console.log(ignore)
     return null

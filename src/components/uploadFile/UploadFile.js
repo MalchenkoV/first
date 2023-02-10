@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchServerUrl, fetchUploadFile } from '../../store/reducers/uploadfile'
@@ -10,26 +10,28 @@ export function UploadFile () {
   const url = useSelector((state) => state.uploadfiles.serverUrl)
   const sessId = useSelector((state) => state.uploadfiles.sessId)
   //   const fileList = useSelector((state) => state.uploadfiles.fileList)
+  const fileValue = document.getElementById('file')
   const [file, setFiles] = useState({})
 
   const handleGetServerData = useCallback(() => {
     dispatch(fetchServerUrl())
   }, [])
 
-  const onChange = useCallback(() => {
-    const { newfile } = document.getElementById('file').files[0]
+  useEffect(() => {
+    const newfile = fileValue
     setFiles(newfile)
-  }, [])
+    console.log(newfile)
+  }, [fileValue])
 
   const handleUploadFile = useCallback(() => {
     dispatch(fetchUploadFile({ url, sessId, file }))
-  }, [])
+  }, [file, url, sessId])
 
   return (
     <div className={styles.databox}>
       <h2 className={styles.title}>You can upload file</h2>
       <form encType='multipart/form-data' className={styles.form}>
-        <input type='file' id='file' multiple className={styles.choosefile} onChange={onChange} onClick={handleGetServerData}></input>
+        <input type='file' id='file' multiple className={styles.choosefile} onClick={handleGetServerData}></input>
         <input type='button' className={styles.button} value='Upload' onClick={handleUploadFile}></input>
         <input type='reset' className={styles.button} value='Clear'></input>
       </form>
