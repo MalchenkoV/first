@@ -7,6 +7,7 @@ import { Library } from '../library/Library'
 import { UserForm } from '../userForm/UserForm'
 import { UploadFile } from '../uploadFile/UploadFile'
 import { Maps } from '../map/Maps'
+import { Converter } from '../converter/Converter'
 
 import styles from './styles.module.css'
 
@@ -22,6 +23,7 @@ export default function App () {
             <li><a href='#news' className={styles.link}>News</a></li>
             <li><a href='#library' className={styles.link}>Library</a></li>
             <li><a href='#upload' className={styles.link}>Upload Files</a></li>
+            <li><a href='#convert' className={styles.link}>Converter</a></li>
             <li><a href='#maps' className={styles.link}>Maps</a></li>
           </ul>
         </nav>
@@ -43,10 +45,13 @@ export default function App () {
           {/* <Library /> */}
         </section>
         <section className={styles.upload} id='upload'>
-          <UploadFile />
+          {/* <UploadFile /> */}
+        </section>
+        <section className={styles.convert} id='convert'>
+          <Converter />
         </section>
         <section className={styles.maps} id='maps'>
-          <Maps />
+          {/* <Maps /> */}
         </section>
       </main>
       <footer className={styles.App_footer}>@Created by MalchenkoV</footer>

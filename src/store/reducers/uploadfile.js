@@ -15,7 +15,10 @@ export const uploadSlice = createSlice({
       state.sessId = action.payload.sessId
     },
     setFileList (state, action) {
-      state.fileList = action.payload.fileList
+      state.fileList = [...state.fileList, action.payload]
+    },
+    clearState (state, action) {
+      state.fileList = []
     },
   },
 })
@@ -44,22 +47,19 @@ export const fetchServerUrl = createAsyncThunk('fetch/serverurl', async (_, thun
 
 export const fetchUploadFile = createAsyncThunk('fetch/uploadfile', async (ServerData, thunkAPI) => {
   try {
+    // eslint-disable-next-line no-undef
+    const formData = new FormData()
+    formData.append('fileData', ServerData.file)
     const data = await axios({
       method: 'post',
       url: `${ServerData.url}?sess_id=${ServerData.sessId}&utype=prem`,
-      data: toFormData(ServerData.file),
+      data: formData,
     })
-    console.log(ServerData)
-  } catch (ignore) {
-    console.log(ignore)
-    return null
-  }
-})
-
-export const fetchFileList = createAsyncThunk('fetch/fileList', async (_, thunkAPI) => {
-  try {
-    const data = await ky.get('https://api-v2.ddownload.com/api/file/list?key=3319874tcf2ywwk4lcosrb')
-    thunkAPI.dispatch(uploadSlice.actions.setFileList(data))
+    thunkAPI.dispatch(uploadSlice.actions.setFileList({
+      name: ServerData.file.name,
+      fileCode: data.data[0].file_code,
+    }))
+    // thunkAPI.dispatch(uploadSlice.actions.clearState())
   } catch (ignore) {
     console.log(ignore)
     return null

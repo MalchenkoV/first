@@ -98,6 +98,13 @@
   background-color: cadetblue;
 }
 
+.convert {
+  display: flex;
+  justify-content: flex-end;
+  height: 100vh;
+  background-color: lemonchiffon;
+}
+
 .maps {
   display: flex;
   justify-content: flex-end;

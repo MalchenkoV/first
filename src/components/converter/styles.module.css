@@ -1,0 +1,73 @@
+.databox {
+  top: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  width: fit-content;
+  max-width: 50%;
+  height: fit-content;
+  margin: auto 20px auto auto;
+  padding: 0 10px 20px;
+
+  text-align: right;
+
+  opacity: 0.7;
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgb(0 0 0 / 15%);
+}
+
+.radiobox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.button {
+  width: 70px;
+  height: fit-content;
+  min-height: 30px;
+  margin-right: 10px;
+
+  font-size: 16px;
+  color: black;
+
+  background-color: snow;
+  border: none;
+  border-radius: 2px;
+  outline: 0;
+}
+
+.form {
+  margin-top: 10px;
+}
+
+.radioform {
+  margin-top: 10px;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+}
+
+.radioinput {
+  display: block;
+}
+
+.choosefile {
+  font-size: 16px;
+}
+
+.title {
+  margin: 10px 0 0;
+  padding: 0;
+  font-size: 30px;
+  color: white;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  list-style-type: none;
+}

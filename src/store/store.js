@@ -19,6 +19,7 @@ import libraryReducer from './reducers/library'
 import userformReducer from './reducers/userform'
 import uploadReducer from './reducers/uploadfile'
 import mapsReducer from './reducers/maps'
+import convertReducer from './reducers/converter'
 
 const rootReducer = combineReducers({
   articles: newsReducer,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   userform: userformReducer,
   uploadfiles: uploadReducer,
   maps: mapsReducer,
+  converter: convertReducer,
 })
 
 const persistConfig = {
