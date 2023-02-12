@@ -22,7 +22,15 @@
 .radiobox {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+}
+
+.loadbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
 }
 
 .button {
@@ -45,14 +53,23 @@
 }
 
 .radioform {
-  margin-top: 10px;
-  border: 2px solid red;
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
+
+  margin-top: 10px;
+
+  text-align: left;
 }
 
 .radioinput {
   display: block;
+}
+
+.radiotitle {
+  margin: 0;
+  text-align: center;
+  text-decoration: underline solid;
 }
 
 .choosefile {
@@ -67,7 +84,33 @@
 }
 
 .link {
+  font-size: 20px;
   color: white;
-  text-decoration: none;
-  list-style-type: none;
+}
+
+.disable {
+  display: none;
+}
+
+.spinner {
+  color: white;
+}
+
+.spinner::after {
+  content: "⠋";
+  display: block;
+  font-size: 30px;
+  animation: changeContent 0.8s linear infinite;
+}
+
+@keyframes changeContent {
+  10% { content: "⠙"; }
+  20% { content: "⠹"; }
+  30% { content: "⠸"; }
+  40% { content: "⠼"; }
+  50% { content: "⠴"; }
+  60% { content: "⠦"; }
+  70% { content: "⠧"; }
+  80% { content: "⠇"; }
+  90% { content: "⠏"; }
 }

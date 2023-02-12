@@ -33,25 +33,25 @@ export default function App () {
       </header>
       <main className={styles.App_main}>
         <section className={styles.weather} id='weather'>
-          {/* <Forecast /> */}
+          <Forecast />
         </section>
         <section className={styles.holiday} id='holiday'>
-          {/* <Holidays /> */}
+          <Holidays />
         </section>
         <section className={styles.news} id='news'>
-          {/* <NewsArticles /> */}
+          <NewsArticles />
         </section>
         <section className={styles.library} id='library'>
-          {/* <Library /> */}
+          <Library />
         </section>
         <section className={styles.upload} id='upload'>
-          {/* <UploadFile /> */}
+          <UploadFile />
         </section>
         <section className={styles.convert} id='convert'>
           <Converter />
         </section>
         <section className={styles.maps} id='maps'>
-          {/* <Maps /> */}
+          <Maps />
         </section>
       </main>
       <footer className={styles.App_footer}>@Created by MalchenkoV</footer>

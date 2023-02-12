@@ -1,37 +1,73 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchConvert, fetchDownload, fetchUpload } from '../../store/reducers/converter'
+import { convertSlice, fetchConvert, fetchDownload, fetchFormats, fetchTaskStatus, fetchUpload } from '../../store/reducers/converter'
 
 import styles from './styles.module.css'
 
 export function Converter () {
   const dispatch = useDispatch()
-  const startId = useSelector((state) => state.converter.taskStartId)
-  const finishId = useSelector((state) => state.converter.taskFinishId)
+  const taskImportId = useSelector((state) => state.converter.taskImportId)
+  const taskConvertId = useSelector((state) => state.converter.taskConvertId)
   const url = useSelector((state) => state.converter.taskUrl)
+  const formatsList = useSelector((state) => state.converter.formatsList)
+  const taskStatus = useSelector((state) => state.converter.taskStatus)
+  const urlTitle = useSelector((state) => state.converter.urlTitle)
   const [file, setFiles] = useState({})
+  const [inputValue, setInputValue] = useState()
+  const [outputValue, setOutputValue] = useState()
+  const [isLoading, setIsLoading] = useState(false)
 
   const onChangeFile = useCallback((e) => {
     const newfile = e.target.files[0]
     setFiles(newfile)
   }, [])
 
-  //   const onChangeRadio = useCallback((e) => {
+  const onChangeInput = useCallback((e) => {
+    const newInputValue = e.target.value
+    setInputValue(newInputValue)
+    dispatch(fetchFormats(newInputValue))
+  }, [])
 
-  //   })
+  const onChangeOutput = useCallback((e) => {
+    const newOutputValue = e.target.value
+    setOutputValue(newOutputValue)
+  }, [])
 
   const handleUpload = useCallback(() => {
     dispatch(fetchUpload(file))
   }, [file])
 
-  const handleConvert = useCallback(() => {
-    dispatch(fetchConvert({ startId }))
-  })
+  function clearValues () {
+    dispatch(convertSlice.actions.clearState())
+    setIsLoading(false)
+    removeChecked()
+  }
 
-  const handleDownload = useCallback(() => {
-    dispatch(fetchDownload(finishId))
-  })
+  const handleConvert = useCallback(() => {
+    dispatch(fetchConvert({ taskImportId, inputValue, outputValue }))
+  }, [inputValue, outputValue])
+
+  function removeChecked () {
+    for (const radio of document.getElementsByName('input')) {
+      radio.checked = false
+    }
+  }
+
+  useEffect(() => {
+    if (taskConvertId !== '') {
+      dispatch(fetchTaskStatus(taskConvertId))
+      setIsLoading(true)
+    }
+  }, [taskConvertId])
+
+  useEffect(() => {
+    if (taskStatus === 'finished') {
+      dispatch(fetchDownload(taskConvertId))
+      clearValues()
+      removeChecked()
+    }
+  }, [taskStatus])
 
   return (
     <div className={styles.databox}>
@@ -39,30 +75,53 @@ export function Converter () {
       <form encType='multipart/form-data' className={styles.form}>
         <input type='file' id='file' multiple className={styles.choosefile} onChange={onChangeFile}></input>
         <input type='button' className={styles.button} value='Upload' onClick={handleUpload}></input>
-        <input type='reset' className={styles.button} value='Clear'></input>
+        <input type='reset' className={styles.button} value='Clear' onClick={clearValues}></input>
       </form>
       <h2 className={styles.title}>Choose formats</h2>
-      <h2 className={styles.title}>From/to</h2>
       <div className={styles.radiobox}>
-        <form className={styles.radioform}>
+        <form className={styles.radioform} onChange={onChangeInput}>
+          <h3 className={styles.radiotitle}>From</h3>
           <div className={styles.radioinput}>
-            <input type='radio' id='doc'></input>
-            <label for='doc'>doc</label>
+            <input type='radio' name='input' value='doc'></input>
+            <label>doc</label>
           </div>
           <div className={styles.radioinput}>
-            <input type='radio' id='jpg'></input>
-            <label for='jpg'>jpg</label>
+            <input type='radio' name='input' value='txt'></input>
+            <label>txt</label>
+          </div>
+          <div className={styles.radioinput}>
+            <input type='radio' name='input' value='pdf'></input>
+            <label>pdf</label>
+          </div>
+          <div className={styles.radioinput}>
+            <input type='radio' name='input' value='jpg'></input>
+            <label>jpg</label>
+          </div>
+          <div className={styles.radioinput}>
+            <input type='radio' name='input' value='png'></input>
+            <label>png</label>
+          </div>
+          <div className={styles.radioinput}>
+            <input type='radio' name='input' value='svg'></input>
+            <label>svg</label>
           </div>
         </form>
-        <form className={styles.radioform}></form>
-        <button className={styles.button}>Convert</button>
+        <form className={styles.radioform} onChange={onChangeOutput}>
+          <h3 className={styles.radiotitle}>To</h3>
+          {formatsList.map((item) => (
+            <div className={styles.radioinput} key={item.to_format}>
+              <input type='radio' name='output' value={item.to_format}></input>
+              <label>{item.to_format}</label>
+            </div>
+          ))}
+        </form>
+        <button className={styles.button} onClick={handleConvert}>Convert</button>
       </div>
-      {/* здесь сделать радио-кнопки на разные форматы from/to и кнопку для конвертирования */}
       <h2 className={styles.title}>Download file</h2>
-      <div>
-        <a href={url} className={styles.link}>Congrats</a>
+      <div className={styles.loadbox}>
+        <div className={isLoading ? styles.spinner : styles.disable}></div>
+        <a href={url} className={styles.link} target='_blank'>{urlTitle}</a>
       </div>
-      {/* сюда вывести ссылку на скачивание */}
     </div>
   )
 }
