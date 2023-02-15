@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { CSSTransition } from 'react-transition-group'
 
 import { fetchLogout, fetchUserList, fetchCreateUser, fetchLoginUser, fetchDelete, formSlice } from '../../store/reducers/userform'
 
@@ -8,6 +9,7 @@ import styles from './styles.module.css'
 
 export function UserForm () {
   const dispatch = useDispatch()
+  const nodeRef = useRef(null)
   const username = useSelector((state) => state.userform.username)
   const sessionId = useSelector((state) => state.userform.sessionid)
   const userId = useSelector((state) => state.userform.id)
@@ -99,26 +101,39 @@ export function UserForm () {
 
   return (
     <div>
-      <h2>Welcome, {username}!</h2>
+      <h2 className={styles.title}>Welcome, {username}!</h2>
       <div className={styles.buttonsBox}>
         <button className={isLogin ? styles.disactive : styles.menu_buttons} onClick={handleClickLoginButton}>Log in</button>
         <button className={isLogin ? styles.disactive : styles.menu_buttons} onClick={handleClickRegisterButton}>Sign up</button>
         <button className={isLogin ? styles.menu_buttons : styles.disactive} onClick={handleLogout}>Log out</button>
         <button className={isLogin ? styles.menu_buttons : styles.disactive} onClick={handleDelete}>Delete account</button>
       </div>
-      <div className={isActivePopup ? styles.popup : styles.disactive}>
-        <div className={styles.popup_container}>
-          <h2 className={styles.popup_title}>Enter your data</h2>
-          <h2 className={isError ? styles.popup_title : styles.disactive}>Error! {errMessage}</h2>
-          <form className={isError ? styles.disactive : styles.popup_form}>
-            <input className={isRegister ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
-            <input className={styles.popup_textInput} id='Email' type='email' value={inputValue.email} placeholder='Enter your email' onChange={handleChange}></input>
-            <input className={styles.popup_textInput} id='Password' type='password' value={inputValue.password} placeholder='Enter your password' onChange={handleChange}></input>
-            <input className={styles.popup_submitButton} type='button' onClick={handleSubmit} value='Submit'></input>
-          </form>
-          <button className={styles.close_icon} onClick={handleClickCloseIcon}></button>
+
+      <CSSTransition
+        in={isActivePopup}
+        nodeRef={nodeRef}
+        timeout={300}
+        classNames={styles.popup}
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className={isActivePopup ? styles.popup : styles.disactive} ref={nodeRef}>
+
+          <div className={styles.popup_container}>
+            <h2 className={styles.popup_title}>Enter your data</h2>
+            <h2 className={isError ? styles.popup_error : styles.disactive}>Error! {errMessage}</h2>
+            <form className={isError ? styles.disactive : styles.popup_form}>
+              <input className={isRegister ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
+              <input className={styles.popup_textInput} id='Email' type='email' value={inputValue.email} placeholder='Enter your email' onChange={handleChange}></input>
+              <input className={styles.popup_textInput} id='Password' type='password' value={inputValue.password} placeholder='Enter your password' onChange={handleChange}></input>
+              <input className={styles.popup_submitButton} type='button' onClick={handleSubmit} value='Submit'></input>
+            </form>
+            <button className={styles.close_icon} onClick={handleClickCloseIcon}></button>
+          </div>
         </div>
-      </div>
+      </CSSTransition>
+
     </div>
   )
 }
+

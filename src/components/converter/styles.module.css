@@ -1,22 +1,12 @@
 .databox {
-  top: 0;
-  bottom: 0;
-
   display: flex;
   flex-direction: column;
 
   width: fit-content;
-  max-width: 50%;
   height: fit-content;
-  margin: auto 20px auto auto;
-  padding: 0 10px 20px;
+  max-height: 80vh;
 
-  text-align: right;
-
-  opacity: 0.7;
-  background-color: black;
-  border-radius: 10px;
-  box-shadow: 0 0 25px rgb(0 0 0 / 15%);
+  text-align: left;
 }
 
 .radiobox {
@@ -27,13 +17,13 @@
 }
 
 .loadbox {
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
+  margin-top: 15px;
+  text-align: left;
 }
 
 .button {
+  cursor: pointer;
+
   width: 70px;
   height: fit-content;
   min-height: 30px;
@@ -42,14 +32,12 @@
   font-size: 16px;
   color: black;
 
-  background-color: snow;
-  border: none;
-  border-radius: 2px;
+  border-radius: 4px;
   outline: 0;
 }
 
 .form {
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .radioform {
@@ -57,7 +45,7 @@
   flex-direction: column;
   align-self: flex-start;
 
-  margin-top: 10px;
+  margin-top: 20px;
 
   text-align: left;
 }
@@ -77,15 +65,19 @@
 }
 
 .title {
-  margin: 10px 0 0;
+  margin: 30px 0 0;
   padding: 0;
   font-size: 30px;
-  color: white;
+  color: black;
+}
+
+.title:first-of-type {
+  margin: 50px 0 0;
 }
 
 .link {
   font-size: 20px;
-  color: white;
+  color: black;
 }
 
 .disable {
@@ -93,24 +85,23 @@
 }
 
 .spinner {
-  color: white;
+  width: 30px;
+  height: 30px;
+
+  color: black;
+
+  border: 2px dashed black;
+  border-radius: 50%;
+
+  animation: rotate 0.8s linear infinite;
 }
 
-.spinner::after {
-  content: "⠋";
-  display: block;
-  font-size: 30px;
-  animation: changeContent 0.8s linear infinite;
-}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
 
-@keyframes changeContent {
-  10% { content: "⠙"; }
-  20% { content: "⠹"; }
-  30% { content: "⠸"; }
-  40% { content: "⠼"; }
-  50% { content: "⠴"; }
-  60% { content: "⠦"; }
-  70% { content: "⠧"; }
-  80% { content: "⠇"; }
-  90% { content: "⠏"; }
+  100% {
+    transform: rotate(360deg);
+  }
 }

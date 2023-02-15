@@ -1,61 +1,75 @@
-import React from 'react'
+import { createRef } from 'react'
+import {
+  NavLink,
+  useLocation,
+  useOutlet,
+} from 'react-router-dom'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import { Container, Navbar, Nav } from 'react-bootstrap'
 
-import { Forecast } from '../forecast/Forecast'
-import { Holidays } from '../holidays/Holidays'
-import { NewsArticles } from '../news/NewsArticles'
-import { Library } from '../library/Library'
-import { UserForm } from '../userForm/UserForm'
-import { UploadFile } from '../uploadFile/UploadFile'
-import { Maps } from '../map/Maps'
-import { Converter } from '../converter/Converter'
+import Home from '../home/Home'
+import Forecast from '../forecast/Forecast'
+import Holidays from '../holidays/Holidays'
+import NewsArticles from '../news/NewsArticles'
+import Library from '../library/Library'
+import UploadFile from '../uploadFile/UploadFile'
+import Maps from '../map/Maps'
+import Converter from '../converter/Converter'
 
-import styles from './styles.module.css'
+import './styles.css'
+
+export const routes = [
+  { path: '/', name: 'Home', nodeRef: createRef(), element: <Home /> },
+  { path: '/forecast', name: 'Forecast', nodeRef: createRef(), element: <Forecast /> },
+  { path: '/holidays', name: 'Holidays', nodeRef: createRef(), element: <Holidays /> },
+  { path: '/news', name: 'News', nodeRef: createRef(), element: <NewsArticles /> },
+  { path: '/library', name: 'Library', nodeRef: createRef(), element: <Library /> },
+  { path: '/upload', name: 'Upload', nodeRef: createRef(), element: <UploadFile /> },
+  { path: '/converter', name: 'Converter', nodeRef: createRef(), element: <Converter /> },
+  { path: '/maps', name: 'Maps', nodeRef: createRef(), element: <Maps /> },
+]
 
 export default function App () {
+  const location = useLocation()
+  const currentOutlet = useOutlet()
+  const { nodeRef } =
+    routes.find((route) => route.path === location.pathname) ?? {}
+
   return (
-    <div className={styles.App}>
-      <header className={styles.App_header}>
-        <h1>Info</h1>
-        <nav className={styles.menu}>
-          <ul className={styles.linkUl}>
-            <li><a href='#weather' className={styles.link}>Weather</a></li>
-            <li><a href='#holiday' className={styles.link}>Holiday</a></li>
-            <li><a href='#news' className={styles.link}>News</a></li>
-            <li><a href='#library' className={styles.link}>Library</a></li>
-            <li><a href='#upload' className={styles.link}>Upload Files</a></li>
-            <li><a href='#convert' className={styles.link}>Converter</a></li>
-            <li><a href='#maps' className={styles.link}>Maps</a></li>
-          </ul>
-        </nav>
-        <section className={styles.add_info}>
-          <UserForm />
-        </section>
-      </header>
-      <main className={styles.App_main}>
-        <section className={styles.weather} id='weather'>
-          <Forecast />
-        </section>
-        <section className={styles.holiday} id='holiday'>
-          <Holidays />
-        </section>
-        <section className={styles.news} id='news'>
-          <NewsArticles />
-        </section>
-        <section className={styles.library} id='library'>
-          <Library />
-        </section>
-        <section className={styles.upload} id='upload'>
-          <UploadFile />
-        </section>
-        <section className={styles.convert} id='convert'>
-          <Converter />
-        </section>
-        <section className={styles.maps} id='maps'>
-          <Maps />
-        </section>
-      </main>
-      <footer className={styles.App_footer}>@Created by MalchenkoV</footer>
-    </div>
+    <>
+      <Navbar bg="light">
+        <Nav className="navigation">
+          {routes.map((route) => (
+            <Nav.Link
+              key={route.path}
+              as={NavLink}
+              to={route.path}
+              className={({ isActive }) => (isActive ? 'active' : undefined)}
+              end
+            >
+              {route.name}
+            </Nav.Link>
+          ))}
+        </Nav>
+      </Navbar>
+      <Container className='container'>
+        <SwitchTransition>
+          <CSSTransition
+            key={location.pathname}
+            nodeRef={nodeRef}
+            timeout={300}
+            classNames='page'
+            unmountOnExit
+          >
+            {(state) => (
+              <div ref={nodeRef} className='page'>
+                {currentOutlet}
+              </div>
+            )}
+          </CSSTransition>
+        </SwitchTransition>
+      </Container>
+    </>
+
   )
 }
-

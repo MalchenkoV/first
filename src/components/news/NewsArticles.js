@@ -5,7 +5,7 @@ import { fetchNews, newsSlice } from '../../store/reducers/news'
 
 import styles from './styles.module.css'
 
-export function NewsArticles () {
+export default function NewsArticles () {
   const dispatch = useDispatch()
 
   const news = useSelector((state) => state.articles.articles)
@@ -30,16 +30,18 @@ export function NewsArticles () {
   }, [])
 
   return (
-    <div className={styles.databox}>
-      <a href={url} className={styles.title} target="_blank" rel="noopener noreferrer">{title}: Last 10 articles</a>
-      <ul>
-        {latestNews.map((item) => (
-          <li className={styles.url} key={item.url}>
-            <a href={item.url} className={styles.url} target="_blank">{item.title}</a>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleClearAndReFetch}>Clear & reFetch</button>
-    </div>
+    <>
+      <div className={styles.databox}>
+        <a href={url} className={styles.title} target="_blank" rel="noopener noreferrer">{title}: Last 10 articles</a>
+        <ul>
+          {latestNews.map((item) => (
+            <li className={styles.url} key={item.url}>
+              <a href={item.url} className={styles.url} target="_blank">{item.title}</a>
+            </li>
+          ))}
+        </ul>
+        <button onClick={handleClearAndReFetch}>Clear & reFetch</button>
+      </div>
+    </>
   )
 }

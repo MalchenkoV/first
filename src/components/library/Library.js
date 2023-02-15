@@ -5,7 +5,7 @@ import { fetchPopularBooks, fetchSearchResults, librarySlice } from '../../store
 
 import styles from './styles.module.css'
 
-export function Library () {
+export default function Library () {
   const dispatch = useDispatch()
   const books = useSelector((state) => state.library.books)
   const popularBooks = books.slice(0, 8)
@@ -58,28 +58,30 @@ export function Library () {
   }, [])
 
   return (
-    <div className={styles.databox}>
-      <form className={styles.search}>
-        <input type='search' id='searchInput' placeholder='Search books' className={styles.search_line} onChange={handleChange}></input>
-        <input type='submit' value='Search' className={styles.search_button} onClick={handleSearchBooks}></input>
-      </form>
-      <div className={styles.buttons}>
-        <button className={styles.page_button} value='Previous' onClick={handlePrevPage}>Previous</button>
-        <button className={styles.page_button} value='Main' onClick={handleMainPage}>Main</button>
-        <button className={styles.page_button} value='Next' onClick={handleNextPage}>Next</button>
+    <>
+      <div className={styles.databox}>
+        <form className={styles.search}>
+          <input type='search' id='searchInput' placeholder='Search books' className={styles.search_line} onChange={handleChange}></input>
+          <input type='submit' value='Search' className={styles.search_button} onClick={handleSearchBooks}></input>
+        </form>
+        <div className={styles.buttons}>
+          <button className={styles.page_button} value='Previous' onClick={handlePrevPage}>Previous</button>
+          <button className={styles.page_button} value='Main' onClick={handleMainPage}>Main</button>
+          <button className={styles.page_button} value='Next' onClick={handleNextPage}>Next</button>
+        </div>
+        <div className={styles.booksgrid}>
+          {popularBooks.map((item) => (
+            <div key={item.id} className={styles.book}>
+              <a href={`https://www.gutenberg.org/ebooks/${item.id}`} className={styles.link} target="_blank">
+                <img className={styles.book_image} src={item.image}></img>
+                <div>
+                  <h3 className={styles.book_title}>{item.title}</h3>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className={styles.booksgrid}>
-        {popularBooks.map((item) => (
-          <div key={item.id} className={styles.book}>
-            <a href={`https://www.gutenberg.org/ebooks/${item.id}`} className={styles.link} target="_blank">
-              <img className={styles.book_image} src={item.image}></img>
-              <div>
-                <h3 className={styles.book_title}>{item.title}</h3>
-              </div>
-            </a>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   )
 }

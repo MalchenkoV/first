@@ -5,7 +5,7 @@ import { fetchDate, fetchEarthquakes, fetchForecast, fetchLocation, fetchSuntime
 
 import styles from './styles.module.css'
 
-export function Forecast () {
+export default function Forecast () {
   const dispatch = useDispatch()
   const temp = useSelector((state) => state.forecast.temperature)
   const wind = useSelector((state) => state.forecast.windspeed)
@@ -37,18 +37,21 @@ export function Forecast () {
   }
 
   return (
-    <div className={styles.databox}>
-      <h2 className={styles.title}>{city}</h2>
-      <h2 className={styles.parameter}>{day}</h2>
-      <h2 className={styles.parameter}>{time}</h2>
-      <h2 className={styles.parameter}>Temperature is {temp} °C</h2>
-      <h2 className={styles.parameter}>Wind speed is {wind} km/h</h2>
-      <h2 className={styles.parameter}>Sunrise at {sunrise}</h2>
-      <h2 className={styles.parameter}>Sunset at {sunset}</h2>
-      <h2 className={styles.parameter}>Earthquakes for the last month: {count}</h2>
+    <>
+      <div className={styles.databox}>
+        <h2 className={styles.title}>{city}</h2>
+        <h2 className={styles.parameter}>{day}</h2>
+        <h2 className={styles.parameter}>{time}</h2>
+        <h2 className={styles.parameter}>Temperature is {temp} °C</h2>
+        <h2 className={styles.parameter}>Wind speed is {wind} km/h</h2>
+        <h2 className={styles.parameter}>Sunrise at {sunrise}</h2>
+        <h2 className={styles.parameter}>Sunset at {sunset}</h2>
+        <h2 className={styles.parameter}>Earthquakes for the last month: {count}</h2>
 
-      <button onClick={onClick}>Обновить</button>
-    </div>
+        <button onClick={onClick}>Обновить</button>
+      </div>
+
+    </>
   )
 }
 
