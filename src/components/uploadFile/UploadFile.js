@@ -1,3 +1,7 @@
+import { UploadOutlined } from '@ant-design/icons'
+import { Button, Card, Upload } from 'antd'
+import Meta from 'antd/es/card/Meta'
+import Title from 'antd/es/typography/Title'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -28,20 +32,26 @@ export default function UploadFile () {
   return (
     <>
       <div className={styles.databox}>
-        <h2 className={styles.title}>Upload file</h2>
-        <form encType='multipart/form-data' className={styles.form}>
-          <input type='file' id='file' multiple className={styles.choosefile} onChange={onChange} onClick={handleGetServerData}></input>
-          <input type='button' className={styles.button} value='Upload' onClick={handleUploadFile}></input>
-          <input type='reset' className={styles.button} value='Clear'></input>
-        </form>
+        <Title className={styles.title}>Upload file</Title>
+        <Upload>
+          <Button icon={<UploadOutlined />} onChange={onChange} onClick={handleGetServerData}>Select File</Button>
+        </Upload>
+        <Button
+          disabled={file === ''}
+          type='primary'
+          onClick={handleUploadFile}
+          style={{
+            marginTop: 16,
+          }}
+        >Upload File</Button>
         <div className={styles.filesgrid}>
           {fileList.map((item) => (
-            <div key={item.fileCode} className={styles.file}>
-              <img className={styles.file_image}></img>
-              <div>
-                <h3 className={styles.file_title}>{item.name}</h3>
-              </div>
-            </div>
+            <Card
+              hoverable
+              className={styles.file}
+              cover={<img alt='file' className={styles.file_image} />}>
+              <Meta title={item.name} />
+            </Card>
           ))}
         </div>
       </div>
@@ -49,3 +59,4 @@ export default function UploadFile () {
   )
 }
 
+// добавить иконку загрузки файла

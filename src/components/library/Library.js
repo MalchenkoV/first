@@ -1,3 +1,8 @@
+import { Button, Card } from 'antd'
+import Meta from 'antd/es/card/Meta'
+import Search from 'antd/es/input/Search'
+import Link from 'antd/es/typography/Link'
+import Title from 'antd/es/typography/Title'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -8,7 +13,6 @@ import styles from './styles.module.css'
 export default function Library () {
   const dispatch = useDispatch()
   const books = useSelector((state) => state.library.books)
-  const popularBooks = books.slice(0, 8)
 
   const [pageNumber, setPageNumber] = useState(1)
   const [searchLineValue, setSearchLineValue] = useState()
@@ -60,26 +64,22 @@ export default function Library () {
   return (
     <>
       <div className={styles.databox}>
-        <form className={styles.search}>
-          <input type='search' id='searchInput' placeholder='Search books' className={styles.search_line} onChange={handleChange}></input>
-          <input type='submit' value='Search' className={styles.search_button} onClick={handleSearchBooks}></input>
-        </form>
+        <Search placeholder="Search books" onSearch={handleSearchBooks} id='searchInput' onChange={handleChange} enterButton />
         <div className={styles.buttons}>
-          <button className={styles.page_button} value='Previous' onClick={handlePrevPage}>Previous</button>
-          <button className={styles.page_button} value='Main' onClick={handleMainPage}>Main</button>
-          <button className={styles.page_button} value='Next' onClick={handleNextPage}>Next</button>
+          <Button type='primary' value='Previous' onClick={handlePrevPage}>Previous</Button>
+          <Button type='primary' value='Main' onClick={handleMainPage}>Main</Button>
+          <Button type='primary' value='Next' onClick={handleNextPage}>Next</Button>
         </div>
         <div className={styles.booksgrid}>
-          {popularBooks.map((item) => (
-            <div key={item.id} className={styles.book}>
-              <a href={`https://www.gutenberg.org/ebooks/${item.id}`} className={styles.link} target="_blank">
-                <img className={styles.book_image} src={item.image}></img>
-                <div>
-                  <h3 className={styles.book_title}>{item.title}</h3>
-                </div>
-              </a>
-            </div>
-          ))}
+          {books.map((item) => (
+            <Link href={`https://www.gutenberg.org/ebooks/${item.id}`} className={styles.link} target="_blank">
+              <Card
+                hoverable
+                className={styles.book}
+                cover={<img alt='book' src={item.image} className={styles.book_image} />}>
+                <Meta title={item.title} />
+              </Card> </Link>),
+          )}
         </div>
       </div>
     </>

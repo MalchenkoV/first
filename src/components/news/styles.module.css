@@ -1,9 +1,7 @@
 .url {
   overflow: hidden;
 
-  margin-top: 15px;
-
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: black;
   text-align: left;
@@ -14,8 +12,6 @@
 }
 
 .title {
-  margin-top: 50px;
-
   font-size: 40px;
   font-weight: 700;
   color: black;
@@ -30,7 +26,7 @@
   height: fit-content;
   max-height: 80vh;
 
-  text-align: center;
+  text-align: left;
 }
 
 @media screen and (max-height: 600px) {

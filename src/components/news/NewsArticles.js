@@ -1,3 +1,6 @@
+import { LinkOutlined } from '@ant-design/icons'
+import { Button, List } from 'antd'
+import Link from 'antd/es/typography/Link'
 import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -32,16 +35,24 @@ export default function NewsArticles () {
   return (
     <>
       <div className={styles.databox}>
-        <a href={url} className={styles.title} target="_blank" rel="noopener noreferrer">{title}: Last 10 articles</a>
-        <ul>
-          {latestNews.map((item) => (
-            <li className={styles.url} key={item.url}>
-              <a href={item.url} className={styles.url} target="_blank">{item.title}</a>
-            </li>
-          ))}
-        </ul>
-        <button onClick={handleClearAndReFetch}>Clear & reFetch</button>
+        <Link strong href={url} className={styles.title} target="_blank" rel="noopener noreferrer">{title}: Last 10 articles</Link>
+        <List
+          dataSource={latestNews}
+          itemLayout='horizontal'
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<LinkOutlined />}
+                description={<Link type='secondary' href={item.url} className={styles.url} target="_blank">{item.title}</Link>}
+              />
+            </List.Item>
+          )}
+        >
+        </List>
+        <Button type='primary' onClick={handleClearAndReFetch}>Clear & reFetch</Button>
       </div>
     </>
   )
 }
+
+// добавить к статьям иконки в качестве аватаров

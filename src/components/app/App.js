@@ -5,7 +5,8 @@ import {
   useOutlet,
 } from 'react-router-dom'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { Container, Navbar, Nav } from 'react-bootstrap'
+import { Layout, Menu } from 'antd'
+import { Content, Footer, Header } from 'antd/es/layout/layout'
 
 import Home from '../home/Home'
 import Forecast from '../forecast/Forecast'
@@ -36,28 +37,27 @@ export default function App () {
     routes.find((route) => route.path === location.pathname) ?? {}
 
   return (
-    <>
-      <Navbar bg="light">
-        <Nav className="navigation">
-          {routes.map((route) => (
-            <Nav.Link
-              key={route.path}
-              as={NavLink}
+    <Layout>
+      <Header>
+        <Menu
+          mode='horizontal'
+          theme='dark'
+          items={routes.map((route) => ({
+            key: route.path,
+            label: (<NavLink
               to={route.path}
               className={({ isActive }) => (isActive ? 'active' : undefined)}
+              key={route.path}
               end
-            >
-              {route.name}
-            </Nav.Link>
-          ))}
-        </Nav>
-      </Navbar>
-      <Container className='container'>
+            >{route.name}</NavLink>),
+          }))}></Menu>
+      </Header>
+      <Content className='container'>
         <SwitchTransition>
           <CSSTransition
             key={location.pathname}
             nodeRef={nodeRef}
-            timeout={300}
+            timeout={200}
             classNames='page'
             unmountOnExit
           >
@@ -68,8 +68,9 @@ export default function App () {
             )}
           </CSSTransition>
         </SwitchTransition>
-      </Container>
-    </>
+      </Content>
+      <Footer></Footer>
+    </Layout>
 
   )
 }

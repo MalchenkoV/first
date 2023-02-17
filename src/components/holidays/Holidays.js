@@ -1,3 +1,5 @@
+import Paragraph from 'antd/es/typography/Paragraph'
+import Title from 'antd/es/typography/Title'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -15,8 +17,8 @@ export default function Holidays () {
   return (
     <>
       <div className={styles.databox}>
-        <h2 className={styles.title}>Today is</h2>
-        <h2 className={styles.todayIs}>{holidayName}</h2>
+        <Title className={styles.title}>Today is</Title>
+        <Paragraph className={styles.todayIs}>{holidayName}</Paragraph>
       </div>
     </>
   )

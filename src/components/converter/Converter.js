@@ -1,3 +1,7 @@
+import { UploadOutlined } from '@ant-design/icons'
+import { Button, Radio, Space, Spin, Upload } from 'antd'
+import Link from 'antd/es/typography/Link'
+import Title from 'antd/es/typography/Title'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -72,56 +76,49 @@ export default function Converter () {
   return (
     <>
       <div className={styles.databox}>
-        <h2 className={styles.title}>Upload file</h2>
-        <form encType='multipart/form-data' className={styles.form}>
-          <input type='file' id='file' multiple className={styles.choosefile} onChange={onChangeFile}></input>
-          <input type='button' className={styles.button} value='Upload' onClick={handleUpload}></input>
-          <input type='reset' className={styles.button} value='Clear' onClick={clearValues}></input>
-        </form>
-        <h2 className={styles.title}>Choose formats</h2>
-        <div className={styles.radiobox}>
-          <form className={styles.radioform} onChange={onChangeInput}>
-            <h3 className={styles.radiotitle}>From</h3>
-            <div className={styles.radioinput}>
-              <input type='radio' name='input' value='doc'></input>
-              <label>doc</label>
-            </div>
-            <div className={styles.radioinput}>
-              <input type='radio' name='input' value='txt'></input>
-              <label>txt</label>
-            </div>
-            <div className={styles.radioinput}>
-              <input type='radio' name='input' value='pdf'></input>
-              <label>pdf</label>
-            </div>
-            <div className={styles.radioinput}>
-              <input type='radio' name='input' value='jpg'></input>
-              <label>jpg</label>
-            </div>
-            <div className={styles.radioinput}>
-              <input type='radio' name='input' value='png'></input>
-              <label>png</label>
-            </div>
-            <div className={styles.radioinput}>
-              <input type='radio' name='input' value='svg'></input>
-              <label>svg</label>
-            </div>
-          </form>
-          <form className={styles.radioform} onChange={onChangeOutput}>
-            <h3 className={styles.radiotitle}>To</h3>
-            {formatsList.map((item) => (
-              <div className={styles.radioinput} key={item.to_format}>
-                <input type='radio' name='output' value={item.to_format}></input>
-                <label>{item.to_format}</label>
-              </div>
-            ))}
-          </form>
-          <button className={styles.button} onClick={handleConvert}>Convert</button>
+        <div>
+          <Title level={2} className={styles.title}>Upload file</Title>
+          <Space>
+            <Upload>
+              <Button icon={<UploadOutlined />} onChange={onChangeFile} style={{ marginTop: 20 }}>Select File</Button>
+            </Upload>
+            <Button
+              disabled={file === ''}
+              type='primary'
+              style={{ marginTop: 20 }}
+              onClick={handleUpload}
+            >Upload File</Button>
+          </Space>
         </div>
-        <h2 className={styles.title}>Download file</h2>
+        <div className={styles.radiobox}>
+          <Title level={2} className={styles.title}>Choose formats</Title>
+          <div>
+            <Radio.Group onChange={onChangeInput} style={{ marginRight: 20 }}>
+              <Title level={3} className={styles.radiotitle}>From</Title>
+              <Space direction='vertical'>
+                <Radio value='doc'>DOC</Radio>
+                <Radio value='txt'>TXT</Radio>
+                <Radio value='pdf'>PDF</Radio>
+                <Radio value='jpg'>JPG</Radio>
+                <Radio value='png'>PNG</Radio>
+                <Radio value='svg'>SVG</Radio>
+              </Space>
+            </Radio.Group>
+            <Radio.Group onChange={onChangeOutput} style={{ marginRight: 20, marginLeft: 20 }}>
+              <Title level={3} className={styles.radiotitle}>To</Title>
+              <Space direction='vertical'>
+                {formatsList.map((item) => (
+                  <Radio value={item.to_format}>{item.to_format.toUpperCase()}</Radio>
+                ))}
+              </Space>
+            </Radio.Group>
+            <Button type='primary' onClick={handleConvert} style={{ marginLeft: 20, alignSelf: 'center' }}>Convert</Button>
+          </div>
+        </div>
         <div className={styles.loadbox}>
-          <div className={isLoading ? styles.spinner : styles.disable}></div>
-          <a href={url} className={styles.link} target='_blank'>{urlTitle}</a>
+          <Title level={2} className={styles.title}>Download file</Title>
+          <Spin className={isLoading ? styles.spinner : styles.disable} />
+          <Link href={url} style={{ marginTop: 30, fontSize: 20 }} target='_blank'>{urlTitle}</Link>
         </div>
       </div>
     </>

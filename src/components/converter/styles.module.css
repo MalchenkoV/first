@@ -1,24 +1,29 @@
 .databox {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-evenly;
 
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   max-height: 80vh;
 
   text-align: left;
+  margin: 0;
+  padding: 0;
 }
 
 .radiobox {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
+  align-self: center;
   justify-content: space-between;
+  margin-left: 60px;
 }
 
 .loadbox {
-  margin-top: 15px;
   text-align: left;
+  margin-left: 60px;
 }
 
 .button {
@@ -65,9 +70,8 @@
 }
 
 .title {
-  margin: 30px 0 0;
+  margin: 0;
   padding: 0;
-  font-size: 30px;
   color: black;
 }
 

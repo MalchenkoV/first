@@ -20,7 +20,7 @@ a {
 
 .page {
   position: absolute;
-  top: 50px;
+  top: 40px;
   right: 30px;
   left: 30px;
 }
@@ -33,7 +33,7 @@ a {
 .page-enter-active {
   transform: scale(1);
   opacity: 1;
-  transition: opacity 300ms, transform 300ms;
+  transition: opacity 200ms, transform 200ms;
 }
 
 .page-exit {
@@ -44,5 +44,5 @@ a {
 .page-exit-active {
   transform: scale(0.9);
   opacity: 0;
-  transition: opacity 300ms, transform 300ms;
+  transition: opacity 200ms, transform 200ms;
 }

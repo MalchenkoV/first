@@ -1,8 +1,8 @@
-import axios from 'axios'
+import { Image } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchLocation, fetchMaps } from '../../store/reducers/maps'
+import { fetchLocation } from '../../store/reducers/maps'
 
 import styles from './styles.module.css'
 
@@ -10,8 +10,7 @@ export default function Maps () {
   const dispatch = useDispatch()
   const latitude = useSelector((state) => state.maps.latitude)
   const longitude = useSelector((state) => state.maps.longitude)
-  const map = `https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/10?mapSize=400,400&pp=${latitude},${longitude};66&mapLayer=Basemap,Buildings&key=AjhFzAhsDYFZisd16U3T_Y_H8-aK2T-6b6BN_CNgA1Vj3MdLsBqgsOlPJsivlOPt`
-  // const src = `data:image/jpeg;base64,${map}`
+  const map = `https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/12?mapSize=800,500&pp=${latitude},${longitude};66&mapLayer=Basemap,Buildings&key=AjhFzAhsDYFZisd16U3T_Y_H8-aK2T-6b6BN_CNgA1Vj3MdLsBqgsOlPJsivlOPt`
   useEffect(() => {
     dispatch(fetchLocation())
   }, [latitude, longitude])
@@ -19,7 +18,7 @@ export default function Maps () {
   return (
     <>
       <div className={styles.databox}>
-        <img src={map} id='image' className={styles.image} alt='Map'></img>
+        <Image src={map} style={{ width: 300, marginTop: 30, height: 200 }} alt='Map' />
       </div>
     </>
   )

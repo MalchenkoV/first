@@ -1,3 +1,7 @@
+import { DatabaseOutlined, FieldTimeOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
+import Paragraph from 'antd/es/typography/Paragraph'
+import Title from 'antd/es/typography/Title'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -39,16 +43,16 @@ export default function Forecast () {
   return (
     <>
       <div className={styles.databox}>
-        <h2 className={styles.title}>{city}</h2>
-        <h2 className={styles.parameter}>{day}</h2>
-        <h2 className={styles.parameter}>{time}</h2>
-        <h2 className={styles.parameter}>Temperature is {temp} °C</h2>
-        <h2 className={styles.parameter}>Wind speed is {wind} km/h</h2>
-        <h2 className={styles.parameter}>Sunrise at {sunrise}</h2>
-        <h2 className={styles.parameter}>Sunset at {sunset}</h2>
-        <h2 className={styles.parameter}>Earthquakes for the last month: {count}</h2>
+        <Title className={styles.title}>{city}</Title>
+        <Paragraph className={styles.parameter}>{day}</Paragraph>
+        <Paragraph className={styles.parameter}>{time}</Paragraph>
+        <Paragraph className={styles.parameter}>Temperature is {temp} °C</Paragraph>
+        <Paragraph className={styles.parameter}>Wind speed is {wind} km/h</Paragraph>
+        <Paragraph className={styles.parameter}>Sunrise at {sunrise}</Paragraph>
+        <Paragraph className={styles.parameter}>Sunset at {sunset}</Paragraph>
+        <Paragraph className={styles.parameter}>Earthquakes for the last month: {count}</Paragraph>
 
-        <button onClick={onClick}>Обновить</button>
+        <Button type='primary' onClick={onClick}>Обновить</Button>
       </div>
 
     </>

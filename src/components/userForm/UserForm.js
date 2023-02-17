@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+import { Button } from 'antd'
+import Title from 'antd/es/typography/Title'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
@@ -101,12 +103,12 @@ export function UserForm () {
 
   return (
     <div>
-      <h2 className={styles.title}>Welcome, {username}!</h2>
+      <Title level={2}>Welcome, {username}!</Title>
       <div className={styles.buttonsBox}>
-        <button className={isLogin ? styles.disactive : styles.menu_buttons} onClick={handleClickLoginButton}>Log in</button>
-        <button className={isLogin ? styles.disactive : styles.menu_buttons} onClick={handleClickRegisterButton}>Sign up</button>
-        <button className={isLogin ? styles.menu_buttons : styles.disactive} onClick={handleLogout}>Log out</button>
-        <button className={isLogin ? styles.menu_buttons : styles.disactive} onClick={handleDelete}>Delete account</button>
+        <Button className={isLogin ? styles.disactive : styles.menu_buttons} type='primary' onClick={handleClickLoginButton}>Log in</Button>
+        <Button className={isLogin ? styles.disactive : styles.menu_buttons} type='primary' onClick={handleClickRegisterButton}>Sign up</Button>
+        <Button className={isLogin ? styles.menu_buttons : styles.disactive} type='primary' onClick={handleLogout}>Log out</Button>
+        <Button className={isLogin ? styles.menu_buttons : styles.disactive} type='primary' onClick={handleDelete}>Delete account</Button>
       </div>
 
       <CSSTransition
@@ -120,13 +122,13 @@ export function UserForm () {
         <div className={isActivePopup ? styles.popup : styles.disactive} ref={nodeRef}>
 
           <div className={styles.popup_container}>
-            <h2 className={styles.popup_title}>Enter your data</h2>
+            <h2 className={styles.popup_title}></h2>
             <h2 className={isError ? styles.popup_error : styles.disactive}>Error! {errMessage}</h2>
             <form className={isError ? styles.disactive : styles.popup_form}>
               <input className={isRegister ? styles.popup_textInput : styles.disactive} id='Name' type='text' value={inputValue.name} placeholder='Enter your name' onChange={handleChange}></input>
               <input className={styles.popup_textInput} id='Email' type='email' value={inputValue.email} placeholder='Enter your email' onChange={handleChange}></input>
               <input className={styles.popup_textInput} id='Password' type='password' value={inputValue.password} placeholder='Enter your password' onChange={handleChange}></input>
-              <input className={styles.popup_submitButton} type='button' onClick={handleSubmit} value='Submit'></input>
+              <input className={styles.popup_submitButton} type='button' onClick={} value='Submit'></input>
             </form>
             <button className={styles.close_icon} onClick={handleClickCloseIcon}></button>
           </div>
@@ -137,3 +139,8 @@ export function UserForm () {
   )
 }
 
+<Modal title="Enter your data" open={isActivePopup} onOk={handleSubmit} onCancel={handleClickCloseIcon}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
