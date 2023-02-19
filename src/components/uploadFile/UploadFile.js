@@ -16,6 +16,9 @@ export default function UploadFile () {
   const fileList = useSelector((state) => state.uploadfiles.fileList)
   const [file, setFiles] = useState({})
 
+  // получаем адрес сервера, через который пойдет загрузка => ловим файл => отправляем на загрузку;
+  // все загруженные файлы отрисовываются
+
   const handleGetServerData = useCallback(() => {
     dispatch(fetchServerUrl())
   }, [])

@@ -1,8 +1,6 @@
 /* eslint-disable max-len */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import ky from 'ky'
-import { useSelector } from 'react-redux'
 
 import { pad } from '../../utils'
 
@@ -29,7 +27,7 @@ export const forecastSlice = createSlice({
       state.sunrise = (Number(action.payload.sunrise.slice(0, -9)) + 4) + (action.payload.sunrise.slice(-9, action.payload.sunrise.length))
       state.sunset = (Number(action.payload.sunset.slice(0, -9)) + 4) + (action.payload.sunset.slice(-9, action.payload.sunset.length))
     },
-    setDate (state, action) {
+    setDate (state) {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       const date = new Date()
       const currentTime = `${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`
@@ -61,7 +59,7 @@ export const forecastSlice = createSlice({
 
 export const fetchLocation = createAsyncThunk('fetch/location', async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=e25e2c9dd85d461e8f2c79dcac6b978f')
+    const data = await ky.get('https://ipgeolocation.abstractapi.com/v1/?api_key=e25e2c9dd85d461e8f2c79dcac6b978f').json()
     thunkAPI.dispatch(forecastSlice.actions.setLocation({
       city: data.city,
       latitude: data.latitude,
@@ -75,7 +73,7 @@ export const fetchLocation = createAsyncThunk('fetch/location', async (_, thunkA
 
 export const fetchForecast = createAsyncThunk('fetch/forecast', async (userLocation, thunkAPI) => {
   try {
-    const { data } = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&current_weather=true&timezone=auto`)
+    const data = await ky.get(`https://api.open-meteo.com/v1/forecast?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&current_weather=true&timezone=auto`).json()
     const weather = data.current_weather
     thunkAPI.dispatch(forecastSlice.actions.setForecast({
       temperature: weather.temperature,

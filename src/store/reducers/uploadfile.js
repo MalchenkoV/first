@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios, { toFormData } from 'axios'
+import axios from 'axios'
 import ky from 'ky'
 
 export const uploadSlice = createSlice({
@@ -17,7 +17,7 @@ export const uploadSlice = createSlice({
     setFileList (state, action) {
       state.fileList = [...state.fileList, action.payload]
     },
-    clearState (state, action) {
+    clearState (state) {
       state.fileList = []
     },
   },
@@ -50,7 +50,7 @@ export const fetchUploadFile = createAsyncThunk('fetch/uploadfile', async (Serve
     // eslint-disable-next-line no-undef
     const formData = new FormData()
     formData.append('fileData', ServerData.file)
-    const data = await axios({
+    const { data } = await axios({
       method: 'post',
       url: `${ServerData.url}?sess_id=${ServerData.sessId}&utype=prem`,
       data: formData,
@@ -59,7 +59,6 @@ export const fetchUploadFile = createAsyncThunk('fetch/uploadfile', async (Serve
       name: ServerData.file.name,
       fileCode: data.data[0].file_code,
     }))
-    // thunkAPI.dispatch(uploadSlice.actions.clearState())
   } catch (ignore) {
     console.log(ignore)
     return null

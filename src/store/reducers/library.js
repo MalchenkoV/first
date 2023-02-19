@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import ky from 'ky'
 
 export const librarySlice = createSlice({
   name: 'library',
@@ -10,7 +10,7 @@ export const librarySlice = createSlice({
     setPopularBooks (state, action) {
       state.books = action.payload
     },
-    clearState (state, action) {
+    clearState (state) {
       state.books = []
     },
     setSearchResults (state, action) {
@@ -21,7 +21,7 @@ export const librarySlice = createSlice({
 
 export const fetchPopularBooks = createAsyncThunk('fetch/popularBooks', async (PageNumber, thunkApi) => {
   try {
-    const { data } = await axios.get(`https://gutendex.com/books?page=${PageNumber}`)
+    const data = await ky.get(`https://gutendex.com/books?page=${PageNumber}`).json()
     const popularBooks = []
     for (const key in data.results) {
       popularBooks.push({
@@ -39,7 +39,7 @@ export const fetchPopularBooks = createAsyncThunk('fetch/popularBooks', async (P
 
 export const fetchSearchResults = createAsyncThunk('fetch/searchResults', async (SearchParams, thunkApi) => {
   try {
-    const { data } = await axios.get(`https://gutendex.com/books?page=${SearchParams.pageNumber}&search=${SearchParams.searchLineValue}`)
+    const data = await ky.get(`https://gutendex.com/books?page=${SearchParams.pageNumber}&search=${SearchParams.searchLineValue}`).json()
     console.log(data)
     const searchResults = []
     for (const key in data.results) {

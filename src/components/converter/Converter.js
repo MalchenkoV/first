@@ -22,6 +22,8 @@ export default function Converter () {
   const [outputValue, setOutputValue] = useState()
   const [isLoading, setIsLoading] = useState(false)
 
+  // здесь onChange, собирающие данные из формы загрузки файла и радио-кнопок
+
   const onChangeFile = useCallback((e) => {
     const newfile = e.target.files[0]
     setFiles(newfile)
@@ -38,9 +40,23 @@ export default function Converter () {
     setOutputValue(newOutputValue)
   }, [])
 
+  // функции onClick на загрузку и конвертацию
+
   const handleUpload = useCallback(() => {
     dispatch(fetchUpload(file))
   }, [file])
+
+  const handleConvert = useCallback(() => {
+    dispatch(fetchConvert({ taskImportId, inputValue, outputValue }))
+  }, [inputValue, outputValue])
+
+  // функции-очистители
+
+  function removeChecked () {
+    for (const radio of document.getElementsByName('input')) {
+      radio.checked = false
+    }
+  }
 
   function clearValues () {
     dispatch(convertSlice.actions.clearState())
@@ -48,15 +64,7 @@ export default function Converter () {
     removeChecked()
   }
 
-  const handleConvert = useCallback(() => {
-    dispatch(fetchConvert({ taskImportId, inputValue, outputValue }))
-  }, [inputValue, outputValue])
-
-  function removeChecked () {
-    for (const radio of document.getElementsByName('input')) {
-      radio.checked = false
-    }
-  }
+  // проверяет статус таска - закончена ли конвертация, если да - выставляет ссылку на скачивание
 
   useEffect(() => {
     if (taskConvertId !== '') {

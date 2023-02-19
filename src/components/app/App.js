@@ -19,6 +19,8 @@ import Converter from '../converter/Converter'
 
 import './styles.css'
 
+// не использую styles.module.css, так как с ним CSSTransition не работает
+
 export const routes = [
   { path: '/', name: 'Home', nodeRef: createRef(), element: <Home /> },
   { path: '/forecast', name: 'Forecast', nodeRef: createRef(), element: <Forecast /> },
@@ -71,6 +73,5 @@ export default function App () {
       </Content>
       <Footer></Footer>
     </Layout>
-
   )
 }

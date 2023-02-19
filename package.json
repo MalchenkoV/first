@@ -8,10 +8,8 @@
     "@reduxjs/toolkit": "^1.9.1",
     "antd": "^5.2.1",
     "axios": "^1.2.2",
-    "base-64": "^1.0.0",
     "ky": "^0.33.2",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
@@ -19,8 +17,7 @@
     "react-transition-group": "^4.4.5",
     "redux": "^4.2.0",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0",
-    "utf-8": "^2.0.0"
+    "redux-persist": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

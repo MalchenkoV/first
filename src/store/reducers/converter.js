@@ -28,7 +28,7 @@ export const convertSlice = createSlice({
     setTaskStatus (state, action) {
       state.taskStatus = action.payload
     },
-    clearState (state, action) {
+    clearState (state) {
       state.taskImportId = ''
       state.taskConvertId = ''
       state.taskStatus = ''
@@ -52,7 +52,7 @@ export const fetchUpload = createAsyncThunk('fetch/upload', async (File, thunkAP
     // eslint-disable-next-line no-undef
     const formData = new FormData()
     formData.append('fileData', File)
-    const data = await axios({
+    const { data } = await axios({
       method: 'post',
       url: 'https://api.cloudconvert.com/v2/import/upload',
       headers: {
@@ -88,7 +88,7 @@ export const fetchFormats = createAsyncThunk('fetch/formats', async (InputFormat
 
 export const fetchConvert = createAsyncThunk('fetch/convert', async (ConvertDetails, thunkAPI) => {
   try {
-    const data = await axios({
+    const { data } = await axios({
       method: 'post',
       url: 'https://api.cloudconvert.com/v2/convert',
       headers: {
@@ -110,7 +110,7 @@ export const fetchConvert = createAsyncThunk('fetch/convert', async (ConvertDeta
 
 export const fetchTaskStatus = createAsyncThunk('fetch/taskstatus', async (TaskConvertId, thunkAPI) => {
   try {
-    const data = await axios({
+    const { data } = await axios({
       method: 'get',
       url: `https://api.cloudconvert.com/v2/tasks/${TaskConvertId}/wait`,
       headers: {
@@ -127,7 +127,7 @@ export const fetchTaskStatus = createAsyncThunk('fetch/taskstatus', async (TaskC
 
 export const fetchDownload = createAsyncThunk('fetch/download', async (TaskConvertId, thunkAPI) => {
   try {
-    const data = await axios({
+    const { data } = await axios({
       method: 'post',
       url: 'https://api.cloudconvert.com/v2/export/url',
       headers: {

@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchHolidays } from '../../store/reducers/holidays'
 
-import styles from './styles.module.css'
-
 export default function Holidays () {
   const dispatch = useDispatch()
   const holidayName = useSelector((state) => state.holidays.holidays)

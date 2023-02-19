@@ -1,4 +1,3 @@
-import { DatabaseOutlined, FieldTimeOutlined } from '@ant-design/icons'
 import { Button, Space } from 'antd'
 import Paragraph from 'antd/es/typography/Paragraph'
 import Title from 'antd/es/typography/Title'
@@ -6,8 +5,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchDate, fetchEarthquakes, fetchForecast, fetchLocation, fetchSuntimes } from '../../store/reducers/forecasts'
-
-import styles from './styles.module.css'
 
 export default function Forecast () {
   const dispatch = useDispatch()
@@ -30,9 +27,9 @@ export default function Forecast () {
     dispatch(fetchForecast({ latitude, longitude }))
     dispatch(fetchSuntimes({ latitude, longitude }))
     dispatch(fetchEarthquakes({ latitude, longitude }))
-    // const timer = setInterval(timeUpdt, 1000)
+    const timer = setInterval(timeUpdt, 1000)
 
-    // return () => clearInterval(timer)
+    return () => clearInterval(timer)
   }, [latitude, longitude])
 
   async function onClick () {

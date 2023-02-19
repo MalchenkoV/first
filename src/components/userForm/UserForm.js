@@ -16,7 +16,6 @@ export function UserForm () {
   const sessionId = useSelector((state) => state.userform.sessionid)
   const userId = useSelector((state) => state.userform.id)
   const errMessage = useSelector((state) => state.userform.error)
-  const email = useSelector((state) => state.userform.email)
   const [isActivePopup, setActivePopup] = useState(false)
   const [isLogin, setisLogin] = useState(false)
   const [isRegister, setIsRegister] = useState(true)
@@ -27,13 +26,7 @@ export function UserForm () {
     name: '',
   })
 
-  function handleChange () {
-    setInputValue({
-      email: document.getElementById('Email').value,
-      password: document.getElementById('Password').value,
-      name: document.getElementById('Name').value,
-    })
-  }
+  // описываем открытие и закрытие попапа
 
   function handleOpen () {
     setActivePopup(true)
@@ -46,7 +39,11 @@ export function UserForm () {
       password: '',
     })
     setIsRegister(true)
+    setIsError(false)
+    dispatch(formSlice.actions.clearState())
   }
+
+  // функция смены кнопок menu_buttons => установка сообщения об ошибке
 
   useEffect(() => {
     if (sessionId !== '') {
@@ -57,26 +54,22 @@ export function UserForm () {
   }, [sessionId])
 
   useEffect(() => {
-    if (email !== '') {
-      handleClose()
+    if (errMessage !== '') {
+      setIsError(!isError)
     }
-  }, [email])
+  }, [errMessage])
 
-  function handleClickLoginButton () {
-    handleOpen()
-    setIsRegister(false)
+  // ловим изменения в инпутах
+
+  function handleChange () {
+    setInputValue({
+      email: document.getElementsByName('email').value,
+      password: document.getElementById('password').value,
+      name: document.getElementById('username').value,
+    })
   }
 
-  function handleClickRegisterButton () {
-    handleOpen()
-    setIsRegister(true)
-  }
-
-  function handleClickCloseIcon () {
-    handleClose()
-    setIsError(false)
-    dispatch(formSlice.actions.clearState())
-  }
+  // кнопка сабмита внутри формы логина/регистрации
 
   const handleSubmit = useCallback(() => {
     if (isRegister === true) {
@@ -87,11 +80,17 @@ export function UserForm () {
     }
   }, [inputValue])
 
-  useEffect(() => {
-    if (errMessage !== '') {
-      setIsError(!isError)
-    }
-  }, [errMessage])
+  // функции на кнопках menu_buttons
+
+  function handleClickLoginButton () {
+    handleOpen()
+    setIsRegister(false)
+  }
+
+  function handleClickRegisterButton () {
+    handleOpen()
+    setIsRegister(true)
+  }
 
   const handleLogout = useCallback(() => {
     dispatch(fetchLogout(sessionId))
@@ -108,7 +107,7 @@ export function UserForm () {
       <Button className={isLogin ? styles.disactive : styles.menu_buttons} type='primary' onClick={handleClickRegisterButton}>Sign up</Button>
       <Button className={isLogin ? styles.menu_buttons : styles.disactive} type='primary' onClick={handleLogout}>Log out</Button>
       <Button className={isLogin ? styles.menu_buttons : styles.disactive} type='primary' onClick={handleDelete}>Delete account</Button>
-      <Drawer title="Enter your data" placement="right" onClose={handleClickCloseIcon} open={isActivePopup}>
+      <Drawer title="Enter your data" placement="right" onClose={handleClose} open={isActivePopup}>
         <Title level={2} className={isError ? styles.popup_error : styles.disactive}>Error! {errMessage}</Title>
         <Form
           name="normal_login"

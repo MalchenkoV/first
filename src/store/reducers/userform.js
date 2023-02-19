@@ -21,7 +21,7 @@ export const formSlice = createSlice({
       state.sessionid = action.payload.sessionid
       state.id = action.payload.id
     },
-    clearState (state, action) {
+    clearState (state) {
       state.username = 'User'
       state.email = ''
       state.password = ''
@@ -30,7 +30,7 @@ export const formSlice = createSlice({
     catchError (state, action) {
       state.error = action.payload.error
     },
-    clearId (state, action) {
+    clearId (state) {
       state.sessionid = ''
     },
   },
@@ -111,7 +111,7 @@ export const fetchUserList = createAsyncThunk('fetch/userList', async (UserData,
 
 export const fetchLogout = createAsyncThunk('fetch/logout', async (SessionId, thunkAPI) => {
   try {
-    const { data } = await axios({
+    await axios({
       method: 'post',
       url: 'https://api.m3o.com/v1/user/Logout',
       headers: {
@@ -131,7 +131,7 @@ export const fetchLogout = createAsyncThunk('fetch/logout', async (SessionId, th
 
 export const fetchDelete = createAsyncThunk('fetch/delete', async (UserId, thunkAPI) => {
   try {
-    const { data } = await axios({
+    await axios({
       method: 'post',
       url: 'https://api.m3o.com/v1/user/Delete',
       headers: {

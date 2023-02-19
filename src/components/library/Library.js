@@ -2,7 +2,6 @@ import { Button, Card, Space } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import Search from 'antd/es/input/Search'
 import Link from 'antd/es/typography/Link'
-import Title from 'antd/es/typography/Title'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -13,17 +12,22 @@ import styles from './styles.module.css'
 export default function Library () {
   const dispatch = useDispatch()
   const books = useSelector((state) => state.library.books)
-
   const [pageNumber, setPageNumber] = useState(1)
   const [searchLineValue, setSearchLineValue] = useState()
+
+  // здесь получаем список популярных книг для главной страницы
 
   useEffect(() => {
     dispatch(fetchPopularBooks(pageNumber))
   }, [])
 
+  // собираем значение из поисковой строки
+
   function handleChange (evt) {
     setSearchLineValue(evt.target.value)
   }
+
+  // запускаем поиск
 
   const handleSearchBooks = useCallback(() => {
     dispatch(librarySlice.actions.clearState())
@@ -34,6 +38,8 @@ export default function Library () {
       dispatch(fetchSearchResults({ searchLineValue, pageNumber: 1 }))
     }
   }, [searchLineValue, pageNumber])
+
+  // функции для кнопок - перелистываем страницы
 
   const handleNextPage = useCallback(() => {
     if (searchLineValue === undefined) {
