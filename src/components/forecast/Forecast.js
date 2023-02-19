@@ -1,5 +1,5 @@
 import { DatabaseOutlined, FieldTimeOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import Paragraph from 'antd/es/typography/Paragraph'
 import Title from 'antd/es/typography/Title'
 import React, { useEffect } from 'react'
@@ -42,18 +42,18 @@ export default function Forecast () {
 
   return (
     <>
-      <div className={styles.databox}>
-        <Title className={styles.title}>{city}</Title>
-        <Paragraph className={styles.parameter}>{day}</Paragraph>
-        <Paragraph className={styles.parameter}>{time}</Paragraph>
-        <Paragraph className={styles.parameter}>Temperature is {temp} °C</Paragraph>
-        <Paragraph className={styles.parameter}>Wind speed is {wind} km/h</Paragraph>
-        <Paragraph className={styles.parameter}>Sunrise at {sunrise}</Paragraph>
-        <Paragraph className={styles.parameter}>Sunset at {sunset}</Paragraph>
-        <Paragraph className={styles.parameter}>Earthquakes for the last month: {count}</Paragraph>
+      <Space direction='vertical'>
+        <Title>{city}</Title>
+        <Paragraph>{day}</Paragraph>
+        <Paragraph>{time}</Paragraph>
+        <Paragraph>Temperature is {temp} °C</Paragraph>
+        <Paragraph>Wind speed is {wind} km/h</Paragraph>
+        <Paragraph>Sunrise at {sunrise}</Paragraph>
+        <Paragraph>Sunset at {sunset}</Paragraph>
+        <Paragraph>Earthquakes for the last month: {count}</Paragraph>
 
         <Button type='primary' onClick={onClick}>Обновить</Button>
-      </div>
+      </Space>
 
     </>
   )

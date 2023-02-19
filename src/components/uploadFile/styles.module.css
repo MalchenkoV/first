@@ -9,34 +9,6 @@
   text-align: left;
 }
 
-.button {
-  width: 70px;
-  height: fit-content;
-  min-height: 30px;
-  margin-right: 10px;
-
-  font-size: 16px;
-  color: black;
-
-  border-radius: 4px;
-  outline: 0;
-}
-
-.form {
-  margin-top: 30px;
-}
-
-.choosefile {
-  font-size: 16px;
-}
-
-.title {
-  margin: 50px 0 0;
-  padding: 0;
-  font-size: 30px;
-  color: black;
-}
-
 .filesgrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 80px);
@@ -58,22 +30,6 @@
   width: 100%;
   max-width: 80px;
   min-height: 100px;
-}
-
-.file_title {
-  overflow: hidden;
-
-  width: 80px;
-  margin: 0;
-  margin-top: 8px;
-  padding: 0;
-
-  font-size: 12px;
-  font-weight: 300;
-  font-style: normal;
-  line-height: 14px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .file_image {

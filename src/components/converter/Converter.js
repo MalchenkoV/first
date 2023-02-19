@@ -1,5 +1,5 @@
 import { UploadOutlined } from '@ant-design/icons'
-import { Button, Radio, Space, Spin, Upload } from 'antd'
+import { Button, Divider, Radio, Space, Spin, Upload } from 'antd'
 import Link from 'antd/es/typography/Link'
 import Title from 'antd/es/typography/Title'
 import { useCallback, useEffect, useState } from 'react'
@@ -75,26 +75,31 @@ export default function Converter () {
 
   return (
     <>
-      <div className={styles.databox}>
-        <div>
-          <Title level={2} className={styles.title}>Upload file</Title>
-          <Space>
-            <Upload>
-              <Button icon={<UploadOutlined />} onChange={onChangeFile} style={{ marginTop: 20 }}>Select File</Button>
-            </Upload>
-            <Button
-              disabled={file === ''}
-              type='primary'
-              style={{ marginTop: 20 }}
-              onClick={handleUpload}
-            >Upload File</Button>
-          </Space>
-        </div>
-        <div className={styles.radiobox}>
-          <Title level={2} className={styles.title}>Choose formats</Title>
-          <div>
-            <Radio.Group onChange={onChangeInput} style={{ marginRight: 20 }}>
-              <Title level={3} className={styles.radiotitle}>From</Title>
+      <Space className={styles.databox}>
+        <Space direction='vertical'>
+          <Title level={2}>Upload file</Title>
+          <Divider className={styles.text} />
+          <Upload>
+            <Button icon={<UploadOutlined />} onChange={onChangeFile} className={styles.button}>Select File</Button>
+          </Upload>
+          <Button
+            type='primary'
+            className={styles.button}
+            onClick={handleUpload}
+          >Upload File</Button>
+          <Button
+            type='primary'
+            className={styles.button}
+            onClick={clearValues}
+          >Clear All</Button>
+
+        </Space>
+        <Space direction='vertical' className={styles.radiobox}>
+          <Title level={2}>Choose formats</Title>
+          <Divider className={styles.text} />
+          <Space align='start' className={styles.radio}>
+            <Radio.Group onChange={onChangeInput}>
+              <Title level={3} className={styles.text}>From</Title>
               <Space direction='vertical'>
                 <Radio value='doc'>DOC</Radio>
                 <Radio value='txt'>TXT</Radio>
@@ -104,23 +109,24 @@ export default function Converter () {
                 <Radio value='svg'>SVG</Radio>
               </Space>
             </Radio.Group>
-            <Radio.Group onChange={onChangeOutput} style={{ marginRight: 20, marginLeft: 20 }}>
-              <Title level={3} className={styles.radiotitle}>To</Title>
+            <Radio.Group onChange={onChangeOutput}>
+              <Title level={3} className={styles.text}>To</Title>
               <Space direction='vertical'>
                 {formatsList.map((item) => (
                   <Radio value={item.to_format}>{item.to_format.toUpperCase()}</Radio>
                 ))}
               </Space>
             </Radio.Group>
-            <Button type='primary' onClick={handleConvert} style={{ marginLeft: 20, alignSelf: 'center' }}>Convert</Button>
-          </div>
-        </div>
-        <div className={styles.loadbox}>
-          <Title level={2} className={styles.title}>Download file</Title>
+            <Button type='primary' className={styles.button} onClick={handleConvert}>Convert</Button>
+          </Space>
+        </Space>
+        <Space direction='vertical' className={styles.loadbox}>
+          <Title level={2}>Download file</Title>
+          <Divider className={styles.text} />
           <Spin className={isLoading ? styles.spinner : styles.disable} />
-          <Link href={url} style={{ marginTop: 30, fontSize: 20 }} target='_blank'>{urlTitle}</Link>
-        </div>
-      </div>
+          <Link href={url} className={styles.link} target='_blank'>{urlTitle}</Link>
+        </Space>
+      </Space>
     </>
   )
 }

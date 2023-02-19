@@ -1,5 +1,5 @@
 import { UploadOutlined } from '@ant-design/icons'
-import { Button, Card, Upload } from 'antd'
+import { Button, Card, Space, Upload } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import Title from 'antd/es/typography/Title'
 import { useCallback, useState } from 'react'
@@ -31,20 +31,19 @@ export default function UploadFile () {
 
   return (
     <>
-      <div className={styles.databox}>
-        <Title className={styles.title}>Upload file</Title>
+      <Space direction='vertical' className={styles.databox}>
+        <Title>Upload file</Title>
         <Upload>
           <Button icon={<UploadOutlined />} onChange={onChange} onClick={handleGetServerData}>Select File</Button>
         </Upload>
         <Button
-          disabled={file === ''}
           type='primary'
           onClick={handleUploadFile}
           style={{
             marginTop: 16,
           }}
         >Upload File</Button>
-        <div className={styles.filesgrid}>
+        <Space className={styles.filesgrid}>
           {fileList.map((item) => (
             <Card
               hoverable
@@ -53,10 +52,8 @@ export default function UploadFile () {
               <Meta title={item.name} />
             </Card>
           ))}
-        </div>
-      </div>
+        </Space>
+      </Space>
     </>
   )
 }
-
-// добавить иконку загрузки файла

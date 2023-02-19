@@ -1,4 +1,4 @@
-import { Divider } from 'antd'
+import { Divider, Space } from 'antd'
 import Paragraph from 'antd/es/typography/Paragraph'
 import Title from 'antd/es/typography/Title'
 import React from 'react'
@@ -16,9 +16,9 @@ export default function Home () {
         porta turpis, ut iaculis justo.
       </Paragraph>
       <Divider />
-      <div>
+      <Space>
         <UserForm />
-      </div>
+      </Space>
     </>
   )
 }

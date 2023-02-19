@@ -17,9 +17,7 @@ export default function Maps () {
 
   return (
     <>
-      <div className={styles.databox}>
-        <Image src={map} style={{ width: 300, marginTop: 30, height: 200 }} alt='Map' />
-      </div>
+      <Image src={map} className={styles.image} alt='Map' />
     </>
   )
 }

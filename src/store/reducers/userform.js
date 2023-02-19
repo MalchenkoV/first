@@ -97,7 +97,6 @@ export const fetchUserList = createAsyncThunk('fetch/userList', async (UserData,
         Authorization: 'Bearer MDk4YTJjOWUtOWE3MS00NDc3LWExYjktMGYwNDg0YWUzZThk',
       },
     })
-    console.log(data)
     const userName = data.users.find((item) => item.email === UserData.email)
     thunkAPI.dispatch(formSlice.actions.setUserData({
       email: userName.email,

@@ -1,10 +1,10 @@
 .databox {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  align-items: start;
 
   width: 100%;
-  height: fit-content;
   max-height: 80vh;
 
   text-align: left;
@@ -15,73 +15,10 @@
 .radiobox {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  align-self: center;
-  justify-content: space-between;
-  margin-left: 60px;
 }
 
 .loadbox {
   text-align: left;
-  margin-left: 60px;
-}
-
-.button {
-  cursor: pointer;
-
-  width: 70px;
-  height: fit-content;
-  min-height: 30px;
-  margin-right: 10px;
-
-  font-size: 16px;
-  color: black;
-
-  border-radius: 4px;
-  outline: 0;
-}
-
-.form {
-  margin-top: 30px;
-}
-
-.radioform {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-
-  margin-top: 20px;
-
-  text-align: left;
-}
-
-.radioinput {
-  display: block;
-}
-
-.radiotitle {
-  margin: 0;
-  text-align: center;
-  text-decoration: underline solid;
-}
-
-.choosefile {
-  font-size: 16px;
-}
-
-.title {
-  margin: 0;
-  padding: 0;
-  color: black;
-}
-
-.title:first-of-type {
-  margin: 50px 0 0;
-}
-
-.link {
-  font-size: 20px;
-  color: black;
 }
 
 .disable {
@@ -89,23 +26,25 @@
 }
 
 .spinner {
-  width: 30px;
-  height: 30px;
-
-  color: black;
-
-  border: 2px dashed black;
-  border-radius: 50%;
-
-  animation: rotate 0.8s linear infinite;
+  display: block;
 }
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
+.link {
+  margin-top: 30px;
+  font-size: 20px;
+}
 
-  100% {
-    transform: rotate(360deg);
-  }
+.radio {
+  display: flex;
+  flex-direction: raw;
+  justify-content: space-between;
+}
+
+.button {
+  margin-top: 20px;
+}
+
+.text {
+  margin: 0;
+  padding: 0;
 }

@@ -1,3 +1,4 @@
+import { Space } from 'antd'
 import Paragraph from 'antd/es/typography/Paragraph'
 import Title from 'antd/es/typography/Title'
 import React, { useEffect } from 'react'
@@ -10,16 +11,16 @@ import styles from './styles.module.css'
 export default function Holidays () {
   const dispatch = useDispatch()
   const holidayName = useSelector((state) => state.holidays.holidays)
-  // useEffect(() => {
-  //   dispatch(fetchHolidays())
-  // }, [])
+  useEffect(() => {
+    dispatch(fetchHolidays())
+  }, [])
 
   return (
     <>
-      <div className={styles.databox}>
-        <Title className={styles.title}>Today is</Title>
-        <Paragraph className={styles.todayIs}>{holidayName}</Paragraph>
-      </div>
+      <Space direction='vertical'>
+        <Title>Today is</Title>
+        <Paragraph strong type='secondary' style={{ fontSize: 24 }}>{holidayName}</Paragraph>
+      </Space>
     </>
   )
 }

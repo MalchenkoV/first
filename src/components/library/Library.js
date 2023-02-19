@@ -1,4 +1,4 @@
-import { Button, Card } from 'antd'
+import { Button, Card, Space } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import Search from 'antd/es/input/Search'
 import Link from 'antd/es/typography/Link'
@@ -63,14 +63,14 @@ export default function Library () {
 
   return (
     <>
-      <div className={styles.databox}>
+      <Space direction='vertical' className={styles.databox}>
         <Search placeholder="Search books" onSearch={handleSearchBooks} id='searchInput' onChange={handleChange} enterButton />
-        <div className={styles.buttons}>
+        <Space className={styles.buttons}>
           <Button type='primary' value='Previous' onClick={handlePrevPage}>Previous</Button>
           <Button type='primary' value='Main' onClick={handleMainPage}>Main</Button>
           <Button type='primary' value='Next' onClick={handleNextPage}>Next</Button>
-        </div>
-        <div className={styles.booksgrid}>
+        </Space>
+        <Space className={styles.booksgrid}>
           {books.map((item) => (
             <Link href={`https://www.gutenberg.org/ebooks/${item.id}`} className={styles.link} target="_blank">
               <Card
@@ -80,8 +80,8 @@ export default function Library () {
                 <Meta title={item.title} />
               </Card> </Link>),
           )}
-        </div>
-      </div>
+        </Space>
+      </Space>
     </>
   )
 }
